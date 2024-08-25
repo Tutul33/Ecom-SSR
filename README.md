@@ -1,1 +1,2 @@
 # Ecom-SSR
+Implementing On-Page SEO in an Angular application involves several steps to ensure your content is well-optimized for search engines. Since Angular applications are Single Page Applications (SPAs) and dynamically load content, there are specific challenges, particularly with search engines indexing content properly. Below is a step-by-step guide on how to optimize your Angular app for On-Page SEO.
