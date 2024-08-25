@@ -4,7 +4,7 @@ Add Angular Universal:
 
 #Use Angular CLI to add Angular Universal to your project:
 1. ng add @nguniversal/express-engine
-#This will configure your project to use server-side rendering (SSR).
+2. This will configure your project to use server-side rendering (SSR).
 
 #Build and Serve the Application:
 #Build your Angular Universal app using:
