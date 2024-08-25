@@ -3,10 +3,10 @@ Implementing On-Page SEO in an Angular application involves several steps to ens
 Add Angular Universal:
 
 Use Angular CLI to add Angular Universal to your project:
-ng add @nguniversal/express-engine
+1. ng add @nguniversal/express-engine
 This will configure your project to use server-side rendering (SSR).
-Build and Serve the Application:
 
+Build and Serve the Application:
 Build your Angular Universal app using:
 npm run build:ssr
 
