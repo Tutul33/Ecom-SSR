@@ -1,0 +1,86 @@
+
+
+/*================Address-Picker===================*/
+.address-picker{
+    width:100%;
+    .address-box{
+        width:100%;
+        max-width:100%;
+        display:block;
+        margin:30px auto 150px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+        border-radius:0;
+        padding:24px;
+        .map-box{
+            width:100%;
+            iframe{
+                width:100%;
+                border-radius:7px;
+            }
+        }
+        .address-input{
+            width:100%;
+            padding-top:20px;
+            .d-flex{
+                align-items:flex-start;
+            }
+            img{
+                margin-right:10px;
+                margin-top:3px;
+            }
+            h4{
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 18px;
+                color: #333;
+            }
+            h5{
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                color: #222;
+            }
+            span{
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 18px;
+                color: #363636;
+            }
+            input{
+                border:1px solid #d9d9d9;
+                border-radius:5px;
+                height:46px;
+                padding:0 15px;
+                width:100%;
+            }
+            .btn-change{
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 18px;
+                color: #fff;
+                float: right;
+                background: #F00;
+                padding: 7px 30px;
+                border-radius: 23px;
+                display: block;
+            }
+            .btn-success{
+                width:100%;
+                height:57px;
+                display:flex;
+                align-items:center;
+                background: #008631;
+                border-radius: 10px;
+                justify-content:center;
+                font-size: 18px;
+                font-weight: 500;
+                // letter-spacing: 0.3px;
+            }
+        }
+    }
+}

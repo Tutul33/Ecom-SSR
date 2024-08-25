@@ -1,0 +1,170 @@
+
+
+/*================Success===================*/
+.address-picker.success{
+    background:#E30613;
+    background-image:url("../../assets/images/banners/bg.png");
+    background-position:center;
+    background-size:cover;
+    background-attachment:scroll;
+    display:flex;
+    .address-box{
+        padding:40px 0 100px;
+        .address-info-area{
+            width: 800px;
+            max-width: 100%;
+        }
+        .address-information{
+            width: 100%;
+            padding: 12px 20px;
+            background:#f2f3f8;
+            border:1px solid #e1e1e1;
+            .ind-box{
+                background:#F5D1D1;
+                text-align:center;
+                margin:10px 0;
+                border:1px solid #F5D1D1;
+                border-radius:20px;
+                h2{
+                    font-size: 15px;
+                    color: #000;
+                    padding: 7px 0;
+                    margin:0;
+                }
+                p{
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 22px;
+                    color: #393838;
+                    padding:10px 0;
+                    background:#fff;
+                    border-radius:20px;
+                    margin:0;
+                }
+            }
+        }
+        img{
+            width:136px;
+        }
+        .thankyou{
+            width:285px;
+        }
+        h3{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 22px;
+            color: #E30613;
+            text-align: center;
+        }
+        h4{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 26px;
+            color: #008631;
+            margin:10px 0 30px 0;
+            text-align: center;
+            letter-spacing:-0.5px;
+        }
+        h5{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 20px;
+            text-align: center;
+            color: #fff;
+            background:#666;
+            padding:8px 0;
+            margin-bottom:0;
+        }
+        p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            color: #393838;
+            margin: 5px 0;
+            text-align:center;
+        }
+        .btn-detail{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 22px;
+            color: #008631;
+            text-decoration:underline;
+            display:inline-block;
+            width:auto;
+            margin:auto auto 20px;
+        }
+        .btn-track {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 45px;
+            background: #008631;
+            border-radius: 5px;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 18px;
+            text-align: center;
+            color: #FFFFFF;
+            margin: auto;
+            max-width: 100%;
+            span{
+                margin-left:4px;
+            }
+        }
+        .d-flex{
+            margin:auto;
+            width:400px;
+            max-width:100%;
+        }
+        .btn-copy{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 22px;
+            color: #02BF4E;
+            text-decoration:underline;
+        }
+        .btn-orders{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 22px;
+            color: #008631;
+            text-decoration:underline;
+        }
+    }
+}
+
+
+/*================Loader===================*/
+.loader-area{
+    width:100%;
+    padding-top:100px;
+    height:100vh;
+    .loader-emo{
+        text-align:center;
+        max-width:100%;
+        width:370px;
+        margin-bottom:45px;
+    }
+    h2{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 20px;
+        text-align: center;
+        color: #E30613;
+    }
+    .typing {
+        width: 68px;
+        margin-top: 5px;
+    }
+}

@@ -1,0 +1,33 @@
+
+<div class="dialog-content">
+  <div class="dialog-body">
+    <form #couponForm="ngForm" [addValidators]="validationMsgObj" validationMessage="couponValidateModel" class="p-2 ng-untouched ng-pristine ng-valid">
+      <div class="coupon-area">
+        <div class="coupon-add mb-2">
+          <input appOskInput inputmode='none' type="text" name="couponCode" autocomplete="off" placeholder="Enter a coupon code" class="form-control" inputValidator [(ngModel)]="couponCode">
+          <button class="button-add" (click)="add(couponForm)">
+            <i class="pi pi-plus"></i>
+          </button>
+        </div>
+        <div class="coupon-added">
+          <div class="each-coupon" *ngFor="let coupon of couponList">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5>{{coupon.couponCode}}</h5>
+              <button class="button-danger" (click)="delete(coupon)"> 
+                <i class="pi pi-trash"></i> 
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-success" (click)="ok()">
+            {{fieldTitle['ok']}} 
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+

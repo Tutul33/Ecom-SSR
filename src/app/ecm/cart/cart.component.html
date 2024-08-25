@@ -1,0 +1,179 @@
+<div class="cart-area actions sticky-top">
+    <h1>View Cart
+        <a type="button" (click)="deleteAll()" *ngIf="modelSvc.orderDTO.orderItemList.length > 0">Remove All</a>
+    </h1>
+    <form #productForm="ngForm"  [addValidators]="modelSvc.validationMsgObj" validationMessage="posOrderValidationModel">
+        <div class="cart-product">
+            <div class="cart-line"
+                *ngFor="let item of modelSvc.orderDTO.orderItemList; let entityIndex = index"
+                ngModelGroup="{{entityIndex}}" [addValidators]="modelSvc.validationMsgObj" validationMessage="posOrderValidationModel">
+                <div class="d-flex align-items-center">
+                    <div class="image-holder">
+                        <img src="{{item.imageFilePath}}" alt="Image"/>
+                        <span>CD : {{item.itemCode}}</span>
+                    </div>
+                    <div class="action-holder">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="justify-content-start">
+                                <h4>{{ item.variationsName }}</h4>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <ul>
+                                    <li *ngIf="item.orderItemToppingList.length > 0">
+                                        <a type="button" (click)="onEditCustomize(item)">Edit <img src="assets/images/icons/edit.svg" alt="edit" /></a>
+                                    </li>
+                                    <li>
+                                        <a type="button" class="red" (click)="modelSvc.removeItem(item)"><i class="pi pi-times"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h5><span>{{item.unitPrice + item.totalToppingPrice | number:'1.2-2'}} {{modelSvc.currency}}/{{item.sUOMSN}}</span> Total Price: {{item.totalPrice | number:'1.2-2'}} {{modelSvc.currency}}</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="col-5">
+                                <div class="actions me-2">
+                                    <div class="quantity-box">
+                                        <button type="button"
+                                            (click)="modelSvc.onClickMinus(item, true)"><i
+                                                class="pi pi-minus"></i></button>
+                                        <input *ngIf="!item.allowFractionalSale" maxlength="5" [max]="item.maxQty"
+                                            niHideCutCopyPasteToaster name="qty" inputmode='none'
+                                            type="text" niNumber niSelect class="quantity"
+                                            inputValidator required autocomplete="off"
+                                            id="cartQtyID{{entityIndex}}"
+                                            (keyup)="modelSvc.onChangeQuantity(item)"
+                                            [(ngModel)]="item.qty" placeholder="" />
+
+                                        <input *ngIf="item.allowFractionalSale" [max]="item.maxQty"
+                                            niHideCutCopyPasteToaster name="fractionalQty"
+                                            inputmode='none' type="text" [niDecimal]="3" maxlength="5"
+                                            niSelect class="quantity" inputValidator required
+                                            autocomplete="off" id="cartQtyID{{entityIndex}}"
+                                            (blur)="modelSvc.onChangeQuantity(item)"
+                                            [(ngModel)]="item.qty" placeholder="" />
+                                        <button type="button" (click)="modelSvc.onClickPlus(item, true)"
+                                            class="plus-btn"><i class="pi pi-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div class="actions" *ngIf="item.displayItemDetail">
+                                    <button class="collapsible-btn" type="button"
+                                        data-bs-toggle="collapse" [attr.data-bs-target]="'#cartItemDetail' + item.id" data-bs-target="#coll"
+                                        aria-expanded="false">{{item.displayItemDetail}}<i class="pi pi-angle-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="full-content collapse" id="cartItemDetail{{item.id}}">
+                    <span class="spare" *ngIf="item.spiceOption" style="color:#666">
+                        ({{item.spiceOption}})
+                    </span>
+                    <span class="spare" *ngIf="item.addedToppings" style="color:#0066ff">
+                        Added:{{item.addedToppings}} 
+                        <span *ngIf="item.replacedToppings.length>2 || item.removedToppings.length>2">, </span>
+                    </span>
+                    <span class="spare" *ngIf="item.removedToppings" style="color:#f70303">
+                        Removed:{{item.removedToppings}} 
+                        <span *ngIf="item.replacedToppings.length>2">, </span>
+                    </span>
+                    <span class="spare" *ngIf="item.replacedToppings" style="color:#2ac12a">
+                        Replaced:{{item.replacedToppings}}
+                    </span>
+                    <!-- <p>{{item.displayItemDetail}}</p> -->
+                </div>
+            </div>
+        </div>
+        <div class="cart-summary">
+            <div class="offer-coupon p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div *ngIf="modelSvc.availablePoint > 0" class="d-flex justify-content-start align-items-center">
+                        <h5>{{fieldTitle['redeempoints']}} <span>{{modelSvc.orderDTO.invoicePaymentDetail.usedPoint }}</span></h5>
+                        <button (click)="showPointRedeemModal()" [disabled]="!this.modelSvc.availablePoint" class="redcoupon-plus" type="button">
+                            <i class="pi pi-plus"></i>
+                        </button>
+                        <button (click)="removeRedeemPoint()" [disabled]="!modelSvc.orderDTO.invoicePaymentDetail.pointAmount" class="redcoupon-times" type="button">
+                            <i class="pi pi pi-times"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="modelSvc.tempOfferDetailList.length > 0 && modelSvc.orderDTO.customerID > 0" class="d-flex justify-content-end align-items-center">
+                        <h5 class="d-flex justify-content-end align-items-center">Apply {{fieldTitle['coupon']}} <span class="couponcount">{{modelSvc.orderDTO.couponList.length}}</span></h5>
+                        <button (click)="showCoupon()" [ngClass]="{'disabled': !modelSvc.orderDTO.customerID }" *ngIf="modelSvc.offerDetailList.length > 0" class="redcoupon-plus" type="button">
+                            <i class="pi pi-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <table class="mb-3">
+                <tr>
+                    <th>{{fieldTitle['subtotal']}}</th>
+                    <td>{{modelSvc.orderDTO.subTotal | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <th>{{fieldTitle['deliverychargeshort']}}</th>
+                    <td>{{modelSvc.orderDTO.deliveryCharge | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <th>{{fieldTitle['redeempointamount']}}</th>
+                    <td>{{modelSvc.orderDTO.invoicePaymentDetail.pointAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                </tr>
+                <tr>
+                    <th>{{fieldTitle['sd']}}</th>
+                    <td>{{modelSvc.orderDTO.sD | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <th>{{fieldTitle['discount']}}</th>
+                    <td>{{modelSvc.orderDTO.totalDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <th>{{fieldTitle['pointavailable']}}</th>
+                    <td>{{modelSvc.availablePoint - this.modelSvc.orderDTO.invoicePaymentDetail.usedPoint}}</td>
+                </tr>
+                <tr>
+                    <th>{{fieldTitle['vat']}}</th>
+                    <td>{{modelSvc.orderDTO.vat | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <th>{{fieldTitle['membenefitsdiscount']}}</th>
+                    <td>{{modelSvc.orderDTO.membershipDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <th>{{fieldTitle['grandtotal']}}</th>
+                    <td>{{modelSvc.orderDTO.totalAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                </tr>
+            </table>
+            <table class="distable" *ngIf="modelSvc.offerDetailList.length > 0">
+                <thead>
+                    <tr>
+                        <th>{{fieldTitle['discounteditemsname']}}</th>
+                        <th class="text-center">{{fieldTitle['quantityshort']}}</th>
+                        <th class="text-center">{{fieldTitle['totalpriceshort']}}</th>
+                        <th class="text-center">{{fieldTitle['discount']}}</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of modelSvc.orderDTO.orderItemList;">
+                   <tr *ngIf="item.offerUnitDiscount > 0">
+                    <td>{{item.variationsName}} {{item.displayItemDetail}}</td>
+                    <td class="text-center">{{item.qty}}</td>
+                    <td class="text-end">{{item.totalPrice | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                    <td class="text-end">{{(item.offerUnitDiscount * item.qty) | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                   </tr>
+                   <tr *ngFor="let item of item.offerItemList;">
+                        <td>{{item.variationsName}} {{item.displayItemDetail}}</td>
+                        <td class="text-center">{{item.qty}}</td>
+                        <td class="text-end">{{item.totalPrice | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                        <td class="text-end">{{(item.offerUnitDiscount * item.qty) | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                   </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end">{{fieldTitle['total']}}</td>
+                        <td class="text-end">{{modelSvc.orderDTO.totalDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                   </tr>
+                </tfoot>
+            </table>
+            <div class="p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="justify-content-start">
+                        <h3>{{fieldTitle['totalpayable']}}<br>
+                            <b>{{modelSvc.orderDTO.roundAmount | number:'1.2-2'}} {{modelSvc.currency}}</b>
+                        </h3>
+                    </div>
+                    <div class="justify-content-end">
+                        <button type="button" [disabled]="modelSvc.orderDTO.orderItemList.length == 0" (click)="onClickPlaceOrder(productForm)" class="btn btn-place">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

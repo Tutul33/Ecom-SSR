@@ -1,0 +1,53 @@
+
+
+<div class="liner-set">
+    <div *ngFor="let item of orderItemComboDetailList">
+        <div class="each-liner" *ngIf="!item.isRemoved">
+            <div class="row align-items-center">
+                <div class="col-sm-4">
+                    <div class="set-img">
+                        <span class="item-cd">{{ fieldTitle['codeshort'] }} : {{item.itemCode}}</span>
+                        <app-ni-file-single-view [uploadOption]="itemViewOption" [isFullImage]="true"
+                        [objectId]="item.imageID">
+                        </app-ni-file-single-view>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="set-text">
+                        <h3>{{item.variationsName}} <span *ngIf="item.spiceOption">({{item.spiceOption}})</span></h3>
+                        <div class="d-flex align-items-center">
+                            <button *ngIf="item.isRemovable" (click)="delete(item)"type="button" class="btn btn-sm btn-danger">Remove</button>
+                            <button *ngIf="item.isSpicy" (click)="showSpicySwipeModal(item)" type="button" class="btn btn-sm btn-primary">Spicy</button>
+                            <button *ngIf="item.isUpdateable" (click)="showUpdateSwipeModal(item)" type="button" class="btn btn-sm btn-warning">Update</button>
+                            <button *ngIf="item.isSwipable" (click)="showChangeSwipeModal(item)" type="button" class="btn btn-sm btn-success">Change</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- This is temporary for test purpose -->
+    <!-- <button  (click)="POSBalanceSummryPopUp()" type="button" class="btn btn-sm btn-success">POS Closing</button> -->
+    <div class="bottom-liner">
+        <div class="row align-items-center">
+            <div class="col-sm-3">
+                <div class="total-text">
+                    <h4>{{ fieldTitle['subtotal'] }}:</h4>
+                    <h2>{{entity.unitPrice | number:'1.0-2'}} {{modelSvc.currency}}</h2>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="d-flex align-items-center justify-content-end">
+                    <button (click)="reset()" class="btn btn-sm btn-warning" type="button">
+                        Reset
+                    </button>
+                    <button (click)="confirm()" class="btn btn-sm btn-success" type="button">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

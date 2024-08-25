@@ -1,0 +1,54 @@
+
+<footer class="footer-area" *ngIf="footerConfigModel.isFQLEnable || footerConfigModel.isBIEnable || footerConfigModel.isFSIEnable || footerConfigModel.isMALEnable">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <div class="footer-widget first-wid">
+                    <ul class="footer-list" *ngIf="footerConfigModel.isFQLEnable">
+                        <li *ngFor="let item of footerConfigModel.footerQuickLinkList">
+                            <a type="button" (click)="navigateBySlug(item.value)">
+                                <app-ni-file-single-view *ngIf="item.icon"
+                                [uploadOption]="imageFileViewOption"
+                                [objectId]="item.id"></app-ni-file-single-view>
+                                {{item.title}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div *ngIf="footerConfigModel.isBIEnable">
+                        <div class="foot-logo">
+                            <app-ni-file-single-view *ngIf="footerConfigModel.brandLogoID" [uploadOption]="imageFileViewOption"
+                            [objectId]="footerConfigModel.brandLogoID" [isFullImage]="true"></app-ni-file-single-view>
+                        </div>
+                        <p>
+                            {{footerConfigModel.introText}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="footer-widget">
+                    <ul class="footer-list social" *ngIf="footerConfigModel.isFSIEnable">
+                        <li *ngFor="let item of footerConfigModel.footerSocialIconList">
+                            <a class="social-link" (click)="navigateBySlug(item.value)">
+                                <app-ni-file-single-view *ngIf="item.icon"
+                                [uploadOption]="imageFileViewOption"
+                                [objectId]="item.id"></app-ni-file-single-view>
+                            </a>
+                        </li>
+                    </ul> 
+
+                    <div *ngIf="footerConfigModel.isMALEnable">
+                        <h4>Download the app :</h4>
+                        <div class="app-links">
+                            <a *ngIf="footerConfigModel.googlePlayLink" (click)="navigateBySlug(footerConfigModel.googlePlayLink)"><img src="assets/images/interface/play-store.svg" alt="title"></a>
+                            <a *ngIf="footerConfigModel.appStoreLink" (click)="navigateBySlug(footerConfigModel.appStoreLink)"><img src="assets/images/interface/apps-store.svg" alt="title"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<footer class="copyright-pan" *ngIf="footerConfigModel.isCIEnable"> 
+    <p>{{footerConfigModel.copyRightText}}</p>
+</footer>

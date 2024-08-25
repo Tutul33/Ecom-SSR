@@ -1,0 +1,114 @@
+<!------------Header------------->
+<header class="navigation-part sticky-top">
+    <div class="container-xl">
+        <nav class="navbar navbar-expand-lg">
+            <div class="collapse navbar-collapse dropdown show">
+                <a class="logo d-flex align-items-center" routerLink="">
+                    <span class="d-flex align-items-center justify-content-center me-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="#FF9F9F"><path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06z"/><path d="m12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086z"/></g></svg>
+                    </span>
+                    <img src="assets/images/interface/logo.svg" alt="logo" />
+                </a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item lan-list">
+                        <p-dropdown
+                            [options]="languageList"
+                            name="Language"
+                            optionLabel="languageName"
+                            optionValue="code"
+                            placeholder="Language"
+                            [style]="{ width: '100%' }"
+                            (onChange)="changeLanguage()"
+                            [(ngModel)]="lgCode">
+                        </p-dropdown>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-link" (click)="onClickCart('/food-menu')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#ff9f9f" d="M2.5 4.25a.75.75 0 0 1 .75-.75h.558c.95 0 1.52.639 1.845 1.233c.217.396.374.855.497 1.271A1.29 1.29 0 0 1 6.25 6h12.498c.83 0 1.43.794 1.202 1.593l-1.828 6.409a2.75 2.75 0 0 1-2.644 1.996H9.53a2.75 2.75 0 0 1-2.652-2.022l-.76-2.772l-1.26-4.248l-.001-.008c-.156-.567-.302-1.098-.52-1.494C4.128 5.069 3.96 5 3.809 5H3.25a.75.75 0 0 1-.75-.75ZM9 21a2 2 0 1 0 0-4a2 2 0 0 0 0 4Zm7 0a2 2 0 1 0 0-4a2 2 0 0 0 0 4Z"/></svg>
+                            <span>{{modelSvc.orderDTO.orderItemList.length}}</span>
+                        </a>
+                        <a class="nav-link cart-link mobile-cart" (click)="onClickCart('/cart')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#ff9f9f" d="M2.5 4.25a.75.75 0 0 1 .75-.75h.558c.95 0 1.52.639 1.845 1.233c.217.396.374.855.497 1.271A1.29 1.29 0 0 1 6.25 6h12.498c.83 0 1.43.794 1.202 1.593l-1.828 6.409a2.75 2.75 0 0 1-2.644 1.996H9.53a2.75 2.75 0 0 1-2.652-2.022l-.76-2.772l-1.26-4.248l-.001-.008c-.156-.567-.302-1.098-.52-1.494C4.128 5.069 3.96 5 3.809 5H3.25a.75.75 0 0 1-.75-.75ZM9 21a2 2 0 1 0 0-4a2 2 0 0 0 0 4Zm7 0a2 2 0 1 0 0-4a2 2 0 0 0 0 4Z"/></svg>
+                            <span>{{modelSvc.orderDTO.orderItemList.length}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <app-ni-file-single-view class="user-img" *ngIf="customerInfo.id" [isFullImage]="false"
+                                [uploadOption]="customerImageViewOption" [objectId]="customerInfo.id"></app-ni-file-single-view>
+                            <img *ngIf="!customerInfo.id" class="user-img" src="assets/images/interface/user.svg" alt="user"/>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <ul class="menus-line">
+                                <li>
+                                    <a type="button" (click)="redirectRoute('/profile')">
+                                        <img src="assets/images/icons/user.svg" alt="user"/>My Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a type="button" (click)="redirectRoute('/orders')">
+                                        <img src="assets/images/icons/orders.svg" alt="orders"/>My Order list
+                                    </a>
+                                </li>
+                                <li>
+                                    <a type="button" (click)="redirectRoute('/food-menu')">
+                                        <img src="assets/images/icons/menu.svg" alt="menu"/>Food Menu
+                                    </a>
+                                </li>
+                                <li>
+                                    <a type="button" (click)="redirectRoute('/orders')">
+                                        <img src="assets/images/icons/track.svg" alt="track"/>Track your order
+                                    </a>
+                                </li>
+                                <li>
+                                    <a type="button" (click)="redirectRoute('/store-address')">
+                                        <img src="assets/images/icons/location-green.svg" alt="track"/>All Restaurant Addresses
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-start">
+                                    <ul class="menus-line" *ngIf="ecomMainMenuConfigModel.isMMLEnable">
+                                        <li *ngFor="let item of ecomMainMenuConfigModel.mainMenuLinkList">
+                                            <a type="button" (click)="navigateBySlug(item.value)">
+                                                <app-ni-file-single-view *ngIf="item.icon"
+                                                [uploadOption]="ecomConfigImageViewOption"
+                                                [objectId]="item.id"></app-ni-file-single-view>
+                                                {{item.title}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <ul class="menus-line last-line">
+                                        <li *ngIf="!customerInfo.id">
+                                            <a type="button" (click)="modelSvc.showSiginModal()">
+                                                <img src="assets/images/icons/sign-in.svg" alt="user"/>Sign In
+                                            </a>
+                                        </li>
+                                        <li *ngIf="!customerInfo.id">
+                                            <a type="button" (click)="modelSvc.showSiginModal()">
+                                                <img src="assets/images/icons/sign-up.svg" alt="user"/>Sign Up
+                                            </a>
+                                        </li>
+                                        <li *ngIf="customerInfo.id > 0">
+                                            <a type="button" (click)="showChangePassword()">
+                                                <img src="assets/images/icons/password.svg" alt="password" />Change Password
+                                            </a>
+                                        </li>
+                                        <li *ngIf="customerInfo.id > 0">
+                                            <a type="button" (click)=" logOut()">
+                                                <img src="assets/images/icons/signout.svg" alt="signout" />Sign Out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

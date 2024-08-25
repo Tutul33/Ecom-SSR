@@ -1,0 +1,131 @@
+<div class="cart-area">
+    <div class="container">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="profile-box"> 
+            <div class="sidebar-cart-top">
+                <h5 class="profile-head">My profile <i (click)="showProfileModal()" class="edit-btn fa fa-edit"></i></h5>
+            </div>
+            <div class="sidebar-cart-bottom">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="sidebar-cart-total d-block">
+                      <h6 class="m-0"><b>{{fieldTitle['name']}}: </b>{{modelSvc.customerInfo.name}}</h6>
+                      <h6 class="m-0"><b>{{fieldTitle['email']}}: </b>{{modelSvc.customerInfo.email}}</h6>
+                      <h6 class="m-0"><b>{{fieldTitle['mobilenumber']}}: </b>{{modelSvc.customerInfo.mobileNo}}</h6>
+                      <h6 class="m-0"><b>{{fieldTitle['mobilenoalternative']}}: </b>{{modelSvc.customerInfo.altMobileNo}}</h6>
+                      <h6 class="m-0"><b>{{fieldTitle['dob']}}: </b>{{modelSvc.customerInfo.displayDOB}}</h6>
+                      <h6 class="m-0"><b>{{fieldTitle['gender']}}: </b>{{modelSvc.customerInfo.gender}}</h6>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="sidebar-cart-total d-block">
+                      <h6 class="m-0"><b>{{fieldTitle['profilephoto']}} </b></h6>
+                      <div class="img-box">
+                        <app-ni-file-single-view [isFullImage]="true" [customStyle]="customImageStyle" [uploadOption]="modelSvc.singleFileUploadOption" [targetObject]="modelSvc.customerInfo.imageFile" [objectId]="modelSvc.customerInfo.id"></app-ni-file-single-view>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+          <div class="profile-box"> 
+            <div class="sidebar-cart-top">
+                <h5 class="profile-head">Delivery Address</h5>
+            </div>
+            <div class="added-address profile-address">
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="title">Added Address</div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="place-box">
+                        <button class="add-btn" (click)="showAddressPickerModal()">Add New Address</button>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let item of modelSvc.customerAddressList; let i =index">
+                    <label class="plan basic-plan" for="basic">
+                        <div class="plan-content">
+                            <span>{{item.address}} <br> {{item.mapAddress}}</span>
+                            <i class="fa fa-trash" (click)="deleteAddress(item)"></i>
+                        </div>
+                    </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<p-dialog header="EDIT PROFILE" [(visible)]="modelSvc.isVisibleProfileModal" [modal]="true" [style]="{width: '30%'}"
+  [baseZIndex]="100" [draggable]="false" [resizable]="false" [responsive]="true" [closable]="true">
+  <div class="row">
+    <form #customerProfileForm="ngForm" [addValidators]="validationMsgObj" validationMessage="customerProfileValidateModel">
+      <div class="edit-profile-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label title="{{ fieldTitle['name'] }}">{{fieldTitle["name"]}}</label>
+                <input type="text" name="name" class="form-control" [(ngModel)]="modelSvc.customerProfile.name">
+            </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+              <label title="{{ fieldTitle['email'] }}">{{fieldTitle["email"]}}</label>
+              <input type="text" name="email" class="form-control" [(ngModel)]="modelSvc.customerProfile.email">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+              <label class="ni-sup" title="{{ fieldTitle['mobileno'] }}">{{fieldTitle["mobileno"]}}</label>
+              <input readonly type="text" name="mobileNo" class="form-control" inputValidator [(ngModel)]="modelSvc.customerProfile.mobileNo">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+              <label title="{{ fieldTitle['mobilenoalternative'] }}">{{fieldTitle["mobilenoalternative"]}}</label>
+              <input type="text" name="altMobileNo" class="form-control" [(ngModel)]="modelSvc.customerProfile.altMobileNo">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+              <label title="{{ fieldTitle['dob'] }}">{{fieldTitle["dob"]}}</label>
+              <p-calendar class="datepicker" name="effectiveDate" id="effectiveDate" dateFormat="dd-M-y" [maxDate]="maxDate" [monthNavigator]="true" [yearNavigator]="true" 
+              [yearRange]="yearRange" [(ngModel)]="modelSvc.customerProfile.dOB" [showIcon]="true" [style]="{ width: '100%' }">
+              <i>ICON</i>
+            </p-calendar>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+              <label title="{{ fieldTitle['gender'] }}">{{fieldTitle["gender"]}}</label>
+              <p-dropdown [showClear]="true" [options]="modelSvc.genderList" name="genderCd" [(ngModel)]="modelSvc.customerProfile.genderCd" placeholder="Select Gender"
+              optionLabel="text" optionValue="value" [style]="{ width: '100%' }"></p-dropdown>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+              <label title="{{ fieldTitle['photo'] }}">Your Photo</label>
+              <app-ni-file-single-upload (change)="onImageChange()" [uploadOption]="modelSvc.singleFileUploadOption"
+              [targetObject]="modelSvc.customerProfile.imageFile" class="file-parent"></app-ni-file-single-upload>
+          </div>
+        </div>
+        <div class="place-box cancelation">
+          <div class="d-flex justify-content-end">
+            <button type="button" (click)="closeProfileModal()" class="sign-btn cancel">
+              <i class="fa fa-ban" aria-hidden="true"></i> Close
+            </button>
+            <button type="button" (click)="onSubmit(customerProfileForm)" [disabled]="!customerProfileForm.dirty" class="sign-btn">
+              <i class="fa fa-check" aria-hidden="true"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>
+</p-dialog>

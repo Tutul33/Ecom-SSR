@@ -1,0 +1,30 @@
+<div class="orders-list">
+    <div class="track-search">
+        <h3>Order List</h3>
+        <div class="search-local">
+            <input type="text" name="uniqueOrderNo" [(ngModel)]="uniqueOrderNo" (keyup)="search()" autocomplete="off" placeholder="Type Order Number to Search">
+        </div>
+    </div>
+    <div class="all-orders">
+        <div class="order-line" [ngClass]="item.id == selectedOrderId ? 'order-active' : ''" *ngFor="let item of modelSvc.orderList">
+            <div class="d-flex justify-content-between" (click)="parentCom.onClickOrder(item.id); selectedOrderId = item.id">
+                <div class="justify-content-start">
+                    <div class="d-flex">
+                        <span><img src="assets/images/icons/order.png" alt="order" /></span>
+                        <h2>Order No: <b>{{item.uniqueOrderNo}}</b></h2>
+                    </div>
+                    <h3>{{item.orderType}} Order Status: <b>{{item.orderStatus}}</b></h3>
+                    <h3>Amount : {{item.roundAmount | number:'1.2-2'}} {{modelSvc.currency}} ({{item.paymentStatus}})</h3>
+                </div>
+                <div class="justify-content-end">
+                    <h3>Date:{{item.orderPlaceDate}} {{item.orderPlaceTime}}</h3>
+                    <button class="btn btn-tracking" (click)="onClickTracking(item.id)" *ngIf="!item.isDelivered && item.activityStatusCd != modelSvc.orderActivityStatus['In-Active']">Tracking</button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="modelSvc.orderList.length == 0" class="text-center">
+            <h3 class="no-orders">No records found!</h3>
+        </div>
+    </div>
+</div>

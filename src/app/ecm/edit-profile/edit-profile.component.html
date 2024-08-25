@@ -1,0 +1,118 @@
+<section class="profile-area">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-5 col-sm-12">
+                <div class="profile-pan">
+                    <h1>My Profile <a href="/edit-profile">Edit<img src="assets/images/icons/edit.svg" alt="edit" /></a></h1>
+                    <div class="profile-image edit-image">
+                        <label for="image">
+                            <input type="file" accept="image" name="image" id="image" />
+                            <img src="assets/images/interface/photo.svg" alt="photopicker" />
+                        </label>
+                        <div class="image-pan">
+                            <img src="assets/images/interface/profile.jpg" alt="profile" />
+                        </div>
+                    </div>
+                    <div class="profile-text edit-pro">
+                        <table>
+                            <tr>
+                                <td>Name :</td>
+                                <td>
+                                    <input type="text" name="name" placeholder="Full Name" id="name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>E-Mail :</td>
+                                <td>
+                                    <input type="text" name="email" placeholder="Type Email" id="email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mobile Number :</td>
+                                <td>
+                                    <input type="text" name="number" placeholder="Mobile Number" id="number" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Date of Birth :</td>
+                                <td>
+                                    <p-calendar [(ngModel)]="value" [showIcon]="true" inputId="icon"
+                                        [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                        dateFormat="dd/mm/yy"></p-calendar>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Gender :</td>
+                                <td>
+                                    <div class="d-flex justify-content-start">
+                                        <label class="radio-check">
+                                            <input type="radio" name="images">
+                                            <i class="pi pi-check"></i>
+                                            <h4>Male</h4>
+                                        </label>
+                                        <label class="radio-check">
+                                            <input type="radio" name="images">
+                                            <i class="pi pi-check"></i>
+                                            <h4>Female</h4>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-success" type="button">Save Details</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-sm-12">
+                <div class="profile-pan">
+                    <h1>Address <a href="/address">+ Add New location</a></h1>
+                    <div class="add-liner">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="justify-content-start">
+                                <h3>BSTI Quarter, House 50, Amtali, Banani, Dhaka.</h3>
+                            </div>
+                            <div class="justify-content-end">
+                                <a href="/"><img src="assets/images/icons/trash.svg" alt="location"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-liner">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="justify-content-start">
+                                <h3>1/B, Road # 8 Banani Bridge, Dhaka 1213.</h3>
+                            </div>
+                            <div class="justify-content-end">
+                                <a href="/"><img src="assets/images/icons/trash.svg" alt="location"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-liner">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="justify-content-start">
+                                <h3>3rd Floor, House # 1/B, Road # 8 Banani Bridge.</h3>
+                            </div>
+                            <div class="justify-content-end">
+                                <a href="/"><img src="assets/images/icons/trash.svg" alt="location"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-liner">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="justify-content-start">
+                                <h3>BSTI Quarter, House 50, Amtali, Banani, Dhaka.</h3>
+                            </div>
+                            <div class="justify-content-end">
+                                <a href="/"><img src="assets/images/icons/trash.svg" alt="location"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

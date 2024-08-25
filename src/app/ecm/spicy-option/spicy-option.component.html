@@ -1,0 +1,61 @@
+<div class="dialog-content">
+    <!-- <h5 class="modal-title spicy" id="exampleModalLabel">Spicy Option</h5> -->
+    <div class="dialog-body">
+        <div class="row">
+            <div class="col-12">
+                <!-- <span class="text-center unit-label" title="{{ longft['unit'] }}">{{ longft['unit'] }} :  {{ modelSvc.selectedItem.selectedUOMSN ? modelSvc.selectedItem.selectedUOMSN : modelSvc.selectedItem.sUOMSN}}</span> -->
+            </div>
+        </div>
+        <form #spicyOptionForm="ngForm" [addValidators]="validationMsgObj" validationMessage="spicyOptionValidationModel">
+            <div class="spicy-options pb-0 pt-2">
+                <div class="row justify-content-center">
+                    <div class="available-area py-0 px-3">
+                        <div class="product-box m-0">
+                            <img src="{{modelSvc.selectedItem.imageFilePath}}" alt="Image"/>
+                            <span class="top-bar">
+                                <div class="row align-items-center">
+                                    <div class="col text-start">CD : {{modelSvc.selectedItem.itemCode}}</div>
+                                    <div class="col text-end">
+                                        <span [ngClass]="modelSvc.selectedItem.offerUnitPrice > 0 ? 'offer-minus' : ''">{{modelSvc.selectedItem.unitPrice}} {{modelSvc.currency}}/{{modelSvc.selectedItem.sUOMSN}}</span>&nbsp;
+                                        <span *ngIf="modelSvc.selectedItem.offerUnitPrice">{{modelSvc.selectedItem.offerUnitPrice}} {{modelSvc.currency}}/{{modelSvc.selectedItem.sUOMSN}}</span>
+                                    </div>
+                                </div>
+                                <div class="dlv-status text-center">{{modelSvc.selectedItem.deliveryStatus}} </div>
+                                <div class="offer-img" *ngIf="modelSvc.selectedItem.offerImageFilePath">
+                                    <img src="{{modelSvc.selectedItem.offerImageFilePath}}"/>
+                                </div>
+                            </span>
+                            <div class="bottom-bar">
+                                <div class="actions details-and-actions">
+                                    <h4>{{modelSvc.selectedItem.variationsName}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" *ngFor="let entity of spicyOptionList; let entityIndex = index">
+                        <div ngModelGroup="spicyOption_{{entityIndex}}" [addValidators]="validationMsgObj" validationMessage="spicyOptionValidationModel" class="actions d-flex align-items-center justify-content-center">
+                            <h5>{{entity.value.value}}</h5>
+                            <div class="quantity-spicy">
+                                <button type="button" (click)="onClickMinus(entity)"><i
+                                        class="pi pi-minus"></i></button>
+                                <input *ngIf="!modelSvc.selectedItem.allowFractionalSale" type="text"
+                                    inputmode='none' id="qty_{{entityIndex}}" [max]="modelSvc.selectedItem.maxQty"
+                                    (blur)="onChangeQty(entity)" name="qty" niNumber niSelect inputValidator
+                                    [(ngModel)]="entity.qty" />
+                                <input *ngIf="modelSvc.selectedItem.allowFractionalSale" type="text" [max]="modelSvc.selectedItem.maxQty"
+                                    inputmode='none' id="qty_{{entityIndex}}" inputValidator
+                                    (blur)="onChangeQty(entity)" name="qty" [niDecimal]="4" niSelect
+                                    [(ngModel)]="entity.qty" />
+                                <button type="button" (click)="onClickPlus(entity)" class="plus-btn"><i
+                                        class="pi pi-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button [disabled]="this.selectedList.length == 0" (click)="onConfirm(spicyOptionForm)" type="button" class="btn btn-success mb-3">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

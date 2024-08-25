@@ -1,0 +1,22 @@
+<p-carousel *ngIf="visibilityTypeCd == visibilityType.Slide" [value]="bannerList" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1" [showIndicators]=""
+    [autoplayInterval]="3000" [circular]="true" [responsiveOptions]="responsiveOptionsBanner">
+    <ng-template let-banner pTemplate="item">
+        <a (click)="navigateByCategorySlug(banner.categorySlugText)">
+            <img src="{{banner.imageFilePath}}" alt="Image"/>
+            <div class="carousel-caption">
+                <div class="ql-editor" [innerHtml]="banner.bannerText | niSafeHtml"></div>
+            </div>
+        </a>
+    </ng-template>
+</p-carousel>
+
+<div class="p-carousel-item" *ngIf="visibilityTypeCd == visibilityType.Grid">
+    <div *ngFor="let banner of bannerList">
+        <a (click)="navigateByCategorySlug(banner.categorySlugText)" class="grid-banner">
+            <img src="{{banner.imageFilePath}}" alt="Image"/>
+            <div class="carousel-caption">
+                <div class="ql-editor" [innerHtml]="banner.bannerText | niSafeHtml"></div>
+            </div>
+        </a>
+    </div>
+</div>

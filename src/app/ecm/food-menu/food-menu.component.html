@@ -1,0 +1,32 @@
+<!----------Addons & Sides---------->
+<div class="category-area food-scroll-nav adNav" id="food-scroll-nav">
+    <div class="container-xl">
+        <div class="items-area">
+            <p-carousel [value]="modelSvc.itemCategories" styleClass="custom-carousel" [numVisible]="8" [numScroll]="1"
+                [autoplayInterval]="0" [circular]="true" [showIndicators]="false"
+                [responsiveOptions]="responsiveOptionsCategory" id="categoryID" widgetVar="carouselNice">
+                <ng-template let-category pTemplate="item">
+                    <a class="item-head cate" id="categoryAnchor{{category.itemDisplayCategoryID}}" (click)="this.modelSvc.isFirstScrolling = false; scrollToAnchor(category.itemDisplayCategoryID)" [ngClass]="{ 'active': modelSvc.selectedCategoryID  == category.itemDisplayCategoryID ? 'active' : ''}">
+                        <h4>{{category.category}}</h4>
+                    </a>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+</div>
+<div class="available-area cart-page">
+    <div class="container-xl">
+        <div class="row">
+            <app-item [ngClass]="modelSvc.orderDTO.orderItemList.length > 0 ? 'product-side' : ''" class=""></app-item>
+            <app-cart class="cart-side" *ngIf="modelSvc.orderDTO.orderItemList.length > 0"></app-cart>
+        </div>
+    </div>
+</div>
+
+<div class="addons-btn">
+    <button class="btn-addons" (click)="modelSvc.showAddOnModal()">
+        <h4>Add-on & Sides</h4>
+        <i class="pi pi-chevron-left"></i>
+    </button>
+</div>
+

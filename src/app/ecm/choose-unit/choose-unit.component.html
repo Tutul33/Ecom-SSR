@@ -1,0 +1,47 @@
+
+<div class="dialog-content">
+    <div class="dialog-body">
+        <form #productForm="ngForm">
+            <div class="available-area p-0 mb-2">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="product-box">
+                            <img src="{{modelSvc.selectedItem.imageFilePath}}" alt="Image"/>
+                            <span class="top-bar">
+                                <div class="row align-items-center">
+                                    <div class="col text-start">CD : {{modelSvc.selectedItem.itemCode}}</div>
+                                    <div class="col text-end">
+                                        <span [ngClass]="modelSvc.selectedItem.offerUnitPrice > 0 ? 'offer-minus' : ''">{{modelSvc.selectedItem.unitPrice}} {{modelSvc.currency}}/{{modelSvc.selectedItem.sUOMSN}}</span>&nbsp;
+                                        <span *ngIf="modelSvc.selectedItem.offerUnitPrice">{{modelSvc.selectedItem.offerUnitPrice}}{{modelSvc.currency}}/{{modelSvc.selectedItem.sUOMSN}}</span>
+                                        <br>
+                                        <span [ngClass]="modelSvc.selectedItem.secondaryOfferUnitPrice > 0 ? 'offer-minus' : ''">{{modelSvc.selectedItem.secondaryUnitPrice}} {{modelSvc.currency}}/{{modelSvc.selectedItem.secondaryUnit}}</span>&nbsp;
+                                        <span *ngIf="modelSvc.selectedItem.secondaryOfferUnitPrice">{{modelSvc.selectedItem.secondaryOfferUnitPrice}} {{modelSvc.currency}}/{{modelSvc.selectedItem.secondaryUnit}}</span>
+                                    </div>
+                                </div>
+                                <div class="dlv-status text-center">{{modelSvc.selectedItem.deliveryStatus}}</div>
+                                <div class="offer-img" *ngIf="modelSvc.selectedItem.offerImageFilePath">
+                                    <img src="{{modelSvc.selectedItem.offerImageFilePath}}"/>
+                                </div>
+                            </span>
+                            <div class="bottom-bar">
+                                <div class="actions details-and-actions">
+                                    <h4>{{modelSvc.selectedItem.variationsName}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between px-5">
+                <label class="radio-check" *ngFor="let item of modelSvc.selectedItem.salesPriceList; let i = index">
+                    <input type="radio" name="images" name="uom" id="uom_{{i}}" [(ngModel)]="selectedUnitID" value="{{item.uOMID}}"/>
+                    <i class="pi pi-check"></i>
+                    <h4>{{item.sUOMSN}}</h4>
+                </label>
+            </div>
+            <div class="text-center">
+                <button type="button" [disabled]="!selectedUnitID" (click)="onConfirmUnit()" class="mt-4 btn btn-success mb-3">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="liner-set">
+    <div class="upcg-liner">
+        <div class="row align-items-center">
+            <div class="col-sm-4 col-6" *ngFor="let item of swipeModalUpdateList">
+                <div class="outer-box">
+                    <label for="{{item.itemDetailCodeItemID}}" class="procom-img">
+                        <span class="item-cd">{{ fieldTitle['codeshort'] }} : {{item.itemCode}}</span>
+                        <span class="item-price">{{ modelSvc.isDutyInclude? item.priceDI : item.priceDE}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                        <app-ni-file-single-view [uploadOption]="itemViewOption" [isFullImage]="true" [objectId]="item.imageID"></app-ni-file-single-view>
+                        <h4 class="com-text">{{item.variationsName}}</h4>
+                    </label>
+                    <input type="checkbox" (change)="isSelectedCheck(item)" class="form-check-input" name="{{item.variationsName}}" id="{{item.itemDetailCodeItemID}}" [(ngModel)]="item.isSelected"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-liner">
+        <div class="row align-items-center">
+            <div class="col-sm-12">
+                <div class="d-flex align-items-center justify-content-end">
+                    <button class="btn btn-sm btn-danger" type="button" (click)="close()">
+                        Close
+                    </button>
+                    <button class="btn btn-sm btn-success" type="button" (click)="update()" [disabled]="!isSelected">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,197 @@
+<section class="customize-summary sticky-top">
+    <div class="container-xl">
+        <div class="d-flex align-items-center justify-content-center">
+            <ul>
+                <li>Item Price: <b>{{ (modelSvc.selectedItem.offerUnitPrice > 0 ? modelSvc.selectedItem.offerUnitPrice : modelSvc.selectedItem.unitPrice)  | number:'1.2-2'}} {{modelSvc.currency}}</b></li>
+                <li>Added Item Price: <b>{{(modelSvc.totalToppingOfferPrice > 0 ? modelSvc.totalToppingOfferPrice :  modelSvc.totalToppingPrice) | number:'1.2-2'}} {{modelSvc.currency}}</b></li>
+                <li><b>Total: {{ (modelSvc.selectedItem.offerUnitPrice > 0 ? modelSvc.selectedItem.offerUnitPrice : modelSvc.selectedItem.unitPrice) + (modelSvc.totalToppingOfferPrice > 0 ? modelSvc.totalToppingOfferPrice :  modelSvc.totalToppingPrice) | number:'1.2-2'}}{{modelSvc.currency}}</b></li>
+            </ul>
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="customize-actions actions">
+                    <div class="quantity-box">
+                        <button type="button" (click)="modelSvc.onClickMinus(modelSvc.selectedItem, false)"><i class="pi pi-minus"></i></button>
+                        <input *ngIf="!modelSvc.selectedItem.allowFractionalSale" [max]="modelSvc.selectedItem.maxQty" maxlength="3" niHideCutCopyPasteToaster name="qty" inputmode='none' type="text" niNumber niSelect
+                            class="quantity" inputValidator required autocomplete="off" [(ngModel)]="modelSvc.selectedItem.qty" placeholder="" />
+                        <input *ngIf="modelSvc.selectedItem.allowFractionalSale" [max]="modelSvc.selectedItem.maxQty" niHideCutCopyPasteToaster name="fractionalQty" inputmode='none' type="text" [niDecimal]="3" 
+                            maxlength="3" niSelect class="quantity" inputValidator required autocomplete="off" [(ngModel)]="modelSvc.selectedItem.qty" placeholder="" />
+                        <button type="button" (click)="modelSvc.onClickPlus(modelSvc.selectedItem, false)" class="plus-btn"><i class="pi pi-plus"></i></button>
+                    </div>
+                </div>
+                <button class="btn btn-success" type="button" (click)="closeModal()" [disabled]="modelSvc.selectedToppingList.length == 0">
+                    <img src="assets/images/interface/cart.svg" alt="cart" />{{modelSvc.isEditCustomizeItem == false ? 'Add' : 'Update'}} To Cart
+                </button>
+            </div>
+        </div>
+    </div>
+    <button pRipple pButton icon="pi pi-times" (click)="modalService.close()" class="p-button-danger"></button>
+</section>
+<div class="container-xl">
+    <form>
+        <section class="running-area customize" *ngIf="modelSvc.hasVegTopping">
+            <h1 class="head-title1 head4 mt-3 text-start">Add Veg Topping</h1>
+            <p-carousel [value]="modelSvc.toppingItems | arrayFilter:{ toppingCategoryCd: 1 }"
+                styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [circular]="true" [showIndicators]="false"
+                [responsiveOptions]="responsiveOptionsCustomize">
+                <ng-template let-item pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <label class="radio-check">
+                                <input type="checkbox" [(ngModel)]="item.isChecked" (change)="modelSvc.onChangeTopping(item, item.isChecked, false)" name="vegItem_{{item.itemCode}}"/>
+                                <div class="contents">
+                                    <img src="{{item.imageFilePath}}" alt="Image"/>
+                                    <span class="p-price">
+                                        <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.price}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;
+                                        <span *ngIf="item.offerUnitPrice > 0">{{item.offerUnitPrice | number:'1.2-2'}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                                    </span>
+                                    <span class="pinfo">
+                                        <span>{{item.variationsName}}</span>
+                                    </span>
+                                    <i class="pi pi-check"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </section>
+
+        <section class="running-area customize" *ngIf="modelSvc.hasNonVegTopping">
+            <h1 class="head-title1 head4 mt-3 text-start">Add Non Veg Topping</h1>
+            <p-carousel [value]="modelSvc.toppingItems | arrayFilter:{ toppingCategoryCd: 2 }"
+                styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [circular]="true" [showIndicators]="false"
+                [responsiveOptions]="responsiveOptionsCustomize">
+                <ng-template let-item pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <label class="radio-check">
+                                <input type="checkbox" [(ngModel)]="item.isChecked"
+                                    (change)="modelSvc.onChangeTopping(item, item.isChecked, false)"
+                                    name="nonVegItem_{{item.itemCode}}" />
+                                <div class="contents">
+                                    <img src="{{item.imageFilePath}}" alt="Image"/>
+                                    <span class="p-price">
+                                        <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.price}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;
+                                        <span *ngIf="item.offerUnitPrice > 0">{{item.offerUnitPrice | number:'1.2-2'}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                                    </span>
+                                    <span class="pinfo">
+                                        <span>{{item.variationsName}}</span>
+                                    </span>
+                                    <i class="pi pi-check"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </section>
+
+        <section class="running-area replaceable"
+            *ngIf="modelSvc.hasReplaceableTopping && (modelSvc.hasVegTopping || modelSvc.hasNonVegTopping)">
+            <div class="replace-box">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="mb-4 text-start">Select your replaceable topping</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-end">you may replace it only for one time*</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="radio-check" *ngFor="let item of modelSvc.toppingItems | arrayFilter:{ isReplaceable: true }">
+                            <input type="radio" [checked]="item.isChecked" (change)="modelSvc.onChangeTopping(item, $event.currentTarget['checked'], true)"
+                                id="replaceableItem{{item.itemCode}}" name="replaceableItem" />
+                                <i class="pi pi-check"></i>
+                            <h4>{{item.variationsName}}</h4>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="running-area customize" *ngIf="modelSvc.hasReplaceableTopping && modelSvc.hasVegTopping">
+            <h1 class="head-title1 head4 mt-3 text-start">Replace With Veg</h1>
+            <p-carousel [value]="modelSvc.toppingItems | arrayFilter:{ toppingCategoryCd: 1 }"
+                styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [circular]="true" [showIndicators]="false"
+                [responsiveOptions]="responsiveOptionsCustomize">
+                <ng-template let-item pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <label class="radio-check">
+                                <input type="checkbox" [(ngModel)]="item.isReplaced" [checked]="item.isReplaced"
+                                    name="replacedItem{{item.itemCode}}"
+                                    (change)="modelSvc.onChangeTopping(item, item.isReplaced, true)"
+                                    [disabled]="!modelSvc.isReplaceableItemSelected"/>
+                                <div class="contents">
+                                    <img src="{{item.imageFilePath}}" alt="Image"/>
+                                    <span class="p-price">
+                                        <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.price}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;
+                                        <span *ngIf="item.offerUnitPrice > 0">{{item.offerUnitPrice | number:'1.2-2'}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                                    </span>
+                                    <span class="pinfo">
+                                        <span>{{item.variationsName}}</span>
+                                    </span>
+                                    <i class="pi pi-check"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </section>
+        <section class="running-area customize" *ngIf="modelSvc.hasReplaceableTopping && modelSvc.hasNonVegTopping">
+            <h1 class="head-title1 head4 mt-3 text-start">Replace With Non Veg</h1>
+            <p-carousel [value]="modelSvc.toppingItems | arrayFilter:{ toppingCategoryCd: 2 }"
+                styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [circular]="true" [showIndicators]="false"
+                [responsiveOptions]="responsiveOptionsCustomize">
+                <ng-template let-item pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <label class="radio-check">
+                                <input class="form-control" type="checkbox" [(ngModel)]="item.isReplaced"
+                                    [checked]="item.isReplaced" name="replacedItem{{item.itemCode}}"
+                                    (change)="modelSvc.onChangeTopping(item, item.isReplaced, true)"
+                                    [disabled]="!modelSvc.isReplaceableItemSelected" />
+                                <div class="contents">
+                                    <img src="{{item.imageFilePath}}" alt="Image"/>
+                                    <span class="p-price">
+                                        <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.price}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;
+                                        <span *ngIf="item.offerUnitPrice > 0">{{item.offerUnitPrice | number:'1.2-2'}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                                    </span>
+                                    <span class="pinfo">
+                                        <span>{{item.variationsName}}</span>
+                                    </span>
+                                    <i class="pi pi-check"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </section>
+        <section class="running-area customize mb-5" *ngIf="modelSvc.hasRemovableTopping">
+            <h1 class="head-title1 head4 mt-3 text-start">Removeable Topping</h1>
+            <p-carousel [value]="modelSvc.toppingItems | arrayFilter:{ isRemoval: true }" styleClass="custom-carousel"
+                [numVisible]="6" [numScroll]="1" [circular]="true" [showIndicators]="false"
+                [responsiveOptions]="responsiveOptionsCustomize">
+                <ng-template let-item pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <label class="radio-check removeable-check">
+                                <input type="checkbox" [(ngModel)]="item.isRemoved" (change)="modelSvc.onChangeTopping(item, item.isRemoved, false)" name="removableItem_{{item.itemCode}}"/>
+                                <div class="contents">
+                                    <img src="{{item.imageFilePath}}" alt="Image"/>
+                                    <span class="pinfo">
+                                        <span>{{item.variationsName}}</span>
+                                    </span>
+                                    <i class="pi pi-times"></i>
+                                    <!-- <span class="p-price">{{item.price}} {{modelSvc.currency}}</span> -->
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </section>
+    </form>
+</div>

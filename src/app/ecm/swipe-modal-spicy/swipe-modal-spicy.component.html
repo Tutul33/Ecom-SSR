@@ -1,0 +1,15 @@
+
+
+<form #spicyForm="ngForm">
+    <div class="dialog-body">
+        <label class="radio-check type-radio" for="spicy{{item.value.code}}" *ngFor="let item of spicyOptionList">
+            <input type="radio" (change)="onClickRadio(item)" class="form-radio-input" id="spicy{{item.value.code}}" name="selectedCode" [checked]="item.value.code == selectedCode?.value.code"/>
+            <i class="pi pi-check"></i>
+            <h4>{{item.value.value}}</h4>
+        </label>
+        <div class="text-center">
+            <button type="button" (click)="onConfirm()" class="btn btn-success">Confirm</button>
+        </div>
+    </div>
+</form>
+  

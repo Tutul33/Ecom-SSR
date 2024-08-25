@@ -1,0 +1,221 @@
+
+<div [ngClass]="orderID > 0 ? 'container-xl' : ''">
+    <div [ngClass]="orderID > 0 ? 'row justify-content-center' : ''">
+        <div [ngClass]="orderID > 0 ? 'col col-lg-8 col-md-12' : ''">
+            <div [ngClass]="orderID > 0 ? 'orders-area container-xl' : ''">
+                <div class="order-details">
+                    <div class="order-head d-flex justify-content-between align-items-center">
+                        <div class="justify-content-start">
+                            <h3>Order Details</h3>
+                        </div>
+                        <div class="justify-content-end d-flex align-items-center">
+                            <h2>Order Status: <span>{{order.orderStatus}}</span></h2>
+                            <button *ngIf="isTrackingPage" type="button" class="btn-share ms-3" (click)="onClickCopyTrackingLink(order.orderTrackLink)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32"><path fill="#fff" d="M11.75 2A3.25 3.25 0 0 0 8.5 5.25v18a3.25 3.25 0 0 0 3.25 3.25h12A3.25 3.25 0 0 0 27 23.25v-18A3.25 3.25 0 0 0 23.75 2zM10.5 5.25c0-.69.56-1.25 1.25-1.25h12c.69 0 1.25.56 1.25 1.25v18c0 .69-.56 1.25-1.25 1.25h-12c-.69 0-1.25-.56-1.25-1.25zM7 5.749c-1.174.49-2 1.649-2 3V23.5a6.5 6.5 0 0 0 6.5 6.5h8.75a3.251 3.251 0 0 0 3.001-2H11.5A4.5 4.5 0 0 1 7 23.5z"/></svg>
+                                Copy Order Tracking Link
+                            </button>
+                        </div>
+                    </div>
+                    <div class="order-items">
+                        <h4>Ordered Items</h4>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let item of modelSvc.orderItemList | arrayFilter: { mainOrderItemID: null }">
+                                <div class="item-box">
+                                    <div class="d-flex">
+                                        <img src="{{item.imageFilePath}}" alt="Image"/>
+                                        <div class="detail-box">
+                                            <h3>{{item.variationsName}}</h3>
+                                            <h5>Unit Price: {{item.unitPrice}} {{modelSvc.currency}} | Qty :
+                                                {{item.qty}}/{{item.uOMSN}}
+                                            </h5>
+                                            <button type="button" *ngIf="item.itemDetail" class="collapsible-btn mb-2" data-bs-toggle="collapse" [attr.data-bs-target]="'#orderDetailItem' + item.id" aria-expanded="false">
+                                                Details
+                                            </button>
+                                        </div>
+                                        <span>CD:{{item.itemCode}}</span>
+                                    </div>
+                                    <div id="orderDetailItem{{item.id}}" class="collapse ordered-detail">
+                                        <p>{{item.itemDetail}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tracking-area">
+                        <div class="row justify-content-between">
+                            <ng-container *ngFor="let item of modelSvc.orderTrackList">
+                                <div class="order-tracking col"
+                                    [ngClass]="{'completed' : item.isCompleted == true, 'active' : item.isActive == true}">
+                                    <span class="is-complete"></span>
+                                    <img src="{{item.imgSrc}}" alt="logo" />
+                                    <p>{{item.status}}<br><span>{{item.actionDateTime}}</span></p>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="delivery-info">
+                        <div *ngIf="order.orderTypeCd == modelSvc.orderType.Delivery">
+                            <h1>Delivery Address & Info</h1>
+                            <div class="row">
+                                <div class="col">
+                                    <h4><b>Receiver Name:</b> {{order.customerName}}</h4>
+                                </div>
+                                <div class="col">
+                                    <h4><b>Contact Number:</b> {{order.deliveryContactNo}}</h4>
+                                </div>
+                                <div class="col">
+                                    <h4><b>Email:</b> {{order.customerEmail}}</h4>
+                                </div>
+                            </div>
+                            <p><b>Delivery Address:</b> {{order.deliveryAddress}}</p>
+                        </div>
+                        <div *ngIf="order.orderTypeCd != modelSvc.orderType.Delivery">
+                            <h1>Store Address & Info</h1>
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Store Name : {{order.storeName}}</h4>
+                                </div>
+                                <div class="col">
+                                    <h4>Contact Number : {{order.storeContactNo}}</h4>
+                                </div>
+                                <div class="col">
+                                    <h4>Email : {{order.storeEmail}}</h4>
+                                </div>
+                            </div>
+                            <p>Store Address : {{order.storeAddress}}</p>
+                        </div>
+                        <h3>Your Order No is : {{order.uniqueOrderNo}}</h3>
+                        <div class="order-info d-flex justify-content-between">
+                            <div class="justify-content-start">
+                                <h3>Order Information</h3>
+                                <h4><b>Order Date</b> : {{order.orderPlaceDate}} &nbsp;&nbsp;&nbsp;</h4>
+                                <h4><b>Order Time</b> : {{order.orderPlaceTime}}</h4>
+                                <h4><b>{{order.orderTypeCd == modelSvc.orderType.Delivery ? 'Delivery' : 'Takeaway'}} Time (Est.)</b> : {{order.deliveryDateTime}}</h4>
+                                <h4><b>Order Type</b> : {{order.orderType}}</h4>
+                                <h4><b>Payment Status</b> : {{order.paymentStatus}}</h4>
+                                <h4><b>Order Status</b> : {{order.orderStatus}} ({{order.orderActiveStatus}})</h4>
+                            </div>
+                            <div class="justify-content-end">
+                                <h3>Order Summary</h3>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{fieldTitle['subtotal']}}</td>
+                                            <td>{{order.subTotal | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.totalDiscount > 0">
+                                            <td>{{fieldTitle['discount']}}</td>
+                                            <td>{{order.totalDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{fieldTitle['vat']}}</td>
+                                            <td>{{order.vAT | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{fieldTitle['sd']}}</td>
+                                            <td>{{order.sD | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.deliveryCharge > 0">
+                                            <td>{{fieldTitle['deliverycharge']}}</td>
+                                            <td>{{order.deliveryCharge | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.instantDiscount > 0">
+                                            <td>{{fieldTitle['instantdiscount']}}</td>
+                                            <td>{{order.instantDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.membershipDiscount > 0">
+                                            <td>{{fieldTitle['membershipbenefitdiscount']}}</td>
+                                            <td>{{order.membershipDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.serviceCharge > 0">
+                                            <td>{{fieldTitle['servicecharge']}}</td>
+                                            <td>{{order.serviceCharge | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.serviceChargeDuty > 0">
+                                            <td>{{fieldTitle['dutyonsc']}}</td>
+                                            <td>{{order.serviceChargeDuty | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{fieldTitle['grandtotal']}}</td>
+                                            <td>{{order.totalAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.pointAmount > 0">
+                                            <td>{{fieldTitle['redeempointvalue']}}</td>
+                                            <td>{{order.pointAmount | number:'1.2-2'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{fieldTitle['totalpayable']}}</td>
+                                            <td>{{order.roundAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                          <tr *ngIf="order.totalPoint > 0">
+                                            <td>{{fieldTitle['totalpoint']}}</td>
+                                            <td>{{order.totalPoint | number:'1.2-2'}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.usedPoints > 0">
+                                            <td>{{fieldTitle['redeempoints']}}</td>
+                                            <td>{{order.usedPoints | number:'1.2-2'}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.thisInvoice > 0">
+                                            <td>{{fieldTitle['thisinvoicepoint']}}</td>
+                                            <td>{{order.thisInvoice | number:'1.2-2'}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.availablePoints > 0">
+                                            <td>{{fieldTitle['availablepoints']}}</td>
+                                            <td>{{order.availablePoints | number:'1.2-2'}}</td>
+                                        </tr>
+                                        <tr *ngIf="order.totalCoupon > 0">
+                                            <td>{{fieldTitle['couponshort']}}({{order.totalCouponInEnglish}})</td>
+                                            <td>{{order.couponAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="ordPaymentList.length > 0">
+                                            <td><b>{{fieldTitle['paymentmode']}}</b></td>
+                                            <td>***********</td>
+                                        </tr>
+                                        <tr *ngFor="let item of ordPaymentList">
+                                            <td>{{item.paymentMode}}</td>
+                                            <td>{{item.amount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="totalPaymentAmount > 0">
+                                            <td>{{fieldTitle['total']}}</td>
+                                            <td>{{totalPaymentAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                        <tr *ngIf="changeAmount > 0">
+                                            <td>{{fieldTitle['changedamount']}}</td>
+                                            <td>{{changeAmount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="cart-summary mt-4" *ngIf="hasOffer">
+                            <table class="distable detail-distable">
+                                <thead>
+                                    <tr>
+                                        <th>{{fieldTitle['discounteditemsname']}}</th>
+                                        <th class="text-center">{{fieldTitle['quantityshort']}}</th>
+                                        <th class="text-center">{{fieldTitle['totalpriceshort']}}</th>
+                                        <th class="text-center">{{fieldTitle['discount']}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let item of modelSvc.orderItemList">
+                                    <tr *ngIf="item.mainOrderItemID > 0 || item.offerAmount > 0">
+                                        <td>{{item.variationsName}} {{item.itemDetail}}</td>
+                                        <td class="text-center">{{item.qty}}</td>
+                                        <td class="text-end">{{item.totalPrice | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                        <td class="text-end">{{(item.offerAmount) | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end">{{fieldTitle['total']}}</td>
+                                        <td class="text-end">{{order.totalDiscount | number:'1.2-2'}} {{modelSvc.currency}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

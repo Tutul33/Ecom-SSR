@@ -1,0 +1,32 @@
+<div class="dialog-content">
+    <div class="dialog-body">
+        <form #redeemPointForm="ngForm" [addValidators]="validationMsgObj" validationMessage="redeemPointValidateModel">
+            <div class="redeem-area text-start">
+                <p><b>{{fieldTitle['membername']}}:</b> {{redeemPointModel.customerName}}</p>
+                <p><b>{{fieldTitle['memberid']}}:</b> {{redeemPointModel.memberID}}</p>
+                <p><b>{{fieldTitle['currentpoints']}}:</b> {{redeemPointModel.availablePoint | number:'1.2-2'}}</p>
+                <p><b>{{fieldTitle['monetoryvalue']}} ({{modelSvc.currency}}):</b> {{monetoryValue | number:'1.2-2'}}</p>
+                <p class="mb-3"><b>{{fieldTitle['minimumredeempoint']}}:</b> {{modelSvc.minimumPointsToRedeem}}</p>
+                <div class="form-group">
+                    <label>{{fieldTitle['redeempoints']}}</label>
+                    <input type="text" [appNumOskInput]="false" niHideCutCopyPasteToaster placeholder="{{fieldTitle['points']}}" 
+                    inputmode='none' autocomplete="off" class="form-control" (change)="onChangeRedeemPoint()" name="usedPoint" niNumber niSelect
+                    [(ngModel)]="redeemPointModel.usedPoint" inputValidator />
+                </div>
+                <div class="form-group">
+                    <label>{{fieldTitle['redeemmonetoryvalue']}} ({{modelSvc.currency}})</label>
+                    <input type="text" [appNumOskInput]="false" niHideCutCopyPasteToaster placeholder="{{fieldTitle['value']}}" inputmode='none' 
+                    autocomplete="off" class="form-control" (change)="onChangeRedeemValue()" name="pointAmount" niNumber niSelect [(ngModel)]="redeemPointModel.pointAmount" />
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-end redeem-btn">
+                <button type="button" class="btn btn-danger" (click)="cancel()">
+                    {{fieldTitle['cancel']}}
+                </button>
+                <button type="button" class="btn btn-success" (click)="redeemPoints(redeemPointForm)" [disabled]="!redeemPointForm.dirty" >
+                    {{fieldTitle['redeem']}}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

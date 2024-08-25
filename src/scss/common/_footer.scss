@@ -1,0 +1,133 @@
+
+
+/*==============Footer-CSS================*/
+.footer-area{
+    width:100%;
+    background: #1A201E;
+    border-top: 1px solid #D7D7D7;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.35);
+    padding:50px 0;
+    .footer-widget{
+        width:100%;
+        .foot-logo{
+            img{
+                width:auto!important;
+                height:26px!important;
+                object-fit:cover;
+                object-position:center;
+            }
+        }
+        &.first-wid {
+            width: 100%;
+            padding-right: 165px;
+        }
+        .app-links{
+            display:block;
+            width:auto;
+            a{
+                margin-right:20px;
+                cursor:pointer;
+            }
+            img{
+                width:183px;
+            }
+        }
+        h4{
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 18px;
+            color:#fff;
+            margin-bottom:20px;
+        }
+        p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            color: #d1d1d1;
+            margin-top: 20px;
+            // letter-spacing: 0.7px;
+        }
+        .footer-list{
+            width:100%;
+            margin:0 0 35px;
+            padding:0;
+            li{
+                list-style-type:none;
+                display:inline-block;
+                margin-right:10px;
+                margin-bottom:10px;
+                &:last-child{
+                    margin-right:0px;
+                }
+                a{
+                    display:flex;
+                    width:auto;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 17px;
+                    line-height: 22px;
+                    color:#fff;
+                    align-items:center;
+                    padding:6px 13px;
+                    background:#101010;
+                    border-radius:10px;
+                    cursor:pointer;
+                    // letter-spacing:1px;
+                    &:hover{
+                        color:#00b341;
+                    }
+                    img{
+                        max-width:auto;
+                        margin-right:5px;
+                        height:26px;
+                        width:auto;
+                        object-fit:cover;
+                        object-position:center;
+                    }
+                }
+                a.social-link{
+                    background:transparent;
+                    padding:0;
+                    border-radius:0;
+                    img{
+                        height:36px;
+                    }
+                }
+            }
+            &.social li{
+                margin-right:10px;
+                a i{
+                    padding: 0 10px;
+                    font-size: 26px;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+.copyright-pan{
+    width:100%;
+    p{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 18px;
+        color: #1A201E;
+        text-align:center;
+        padding:20px 0;
+        margin-bottom:0;
+        // letter-spacing:1px;
+        a{
+            text-decoration:underline;
+            color: #1A201E;
+            &:hover{
+                color: #00b341;
+            }
+        }
+    }
+}

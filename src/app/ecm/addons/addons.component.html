@@ -1,0 +1,59 @@
+<!------------Addons & Sides------------->
+<div class="dialog-content">
+    <div class="dialog-body">
+        <form #productForm="ngForm" [addValidators]="modelSvc.validationMsgObj" validationMessage="posOrderValidationModel">
+            <div class="product-line" *ngFor="let item of modelSvc.addOnItems;" [ngClass]="(modelSvc.orderTypeCd == modelSvc.orderType.Delivery && item.isDelivery == false) == true ? 'not-deliverable' : ''">
+                <div class="row align-items-center" [addValidators]="modelSvc.validationMsgObj" ngModelGroup="item{{item.uniqueItemCodeID}}">
+                    <div class="col-lg-5 col-md-5 col-sm-6">
+                        <div class="product-item">
+                            <div class="product-item-content">
+                                <img src="{{item.selectedItem.imageFilePath}}" alt="Image"/>
+                                <span class="pcd ccd">CD : {{item.itemCode}}</span>
+                                <div class="offer-img" *ngIf="item.selectedItem.offerImageFilePath">
+                                    <img src="{{item.selectedItem.offerImageFilePath}}" alt="offer"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-6">
+                        <div class="actions side-actions">
+                            <div class="d-flex justify-content-between">
+                                <h2>{{item.variationsName}}</h2>
+                                <span class="addon-price text-end">
+                                    <span [ngClass]="item.selectedItem.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.selectedItem.unitPrice}} {{modelSvc.currency}}/{{item.selectedItem.sUOMSN}}</span>&nbsp;
+                                    <span *ngIf="item.selectedItem.offerUnitPrice">{{item.selectedItem.offerUnitPrice}}{{modelSvc.currency}}/{{item.selectedItem.sUOMSN}}</span>
+                                    <span *ngIf="item.selectedItem.isSecondaryUnit"><br>
+                                        <span [ngClass]="item.selectedItem.secondaryOfferUnitPrice > 0 ? 'offer-minus' : ''">{{item.selectedItem.secondaryUnitPrice}} {{modelSvc.currency}}/{{item.selectedItem.secondaryUnit}}</span>&nbsp;
+                                        <span *ngIf="item.selectedItem.secondaryOfferUnitPrice">{{item.selectedItem.secondaryOfferUnitPrice}} {{modelSvc.currency}}/{{item.selectedItem.secondaryUnit}}</span>
+                                    </span>
+                                </span>
+                            </div>
+                            <p>{{item.deliveryStatus}}</p>
+                            <div class="quantity-area">
+                                <div class="quantity-box">
+                                    <button type="button" (click)="modelSvc.onClickMinus(item.selectedItem, false)"><i
+                                            class="pi pi-minus"></i></button>
+                                    <input *ngIf="!item.selectedItem.allowFractionalSale" maxlength="5" [max]="item.selectedItem.maxQty"
+                                        niHideCutCopyPasteToaster name="qty" inputmode='none' type="text" niNumber
+                                        niSelect class="quantity" inputValidator required autocomplete="off"
+                                        id="proQty_{{item.uniqueItemCodeID}}" [(ngModel)]="item.selectedItem.qty"
+                                        placeholder="" />
+                                    <input *ngIf="item.selectedItem.allowFractionalSale" niHideCutCopyPasteToaster [max]="item.selectedItem.maxQty"
+                                        name="fractionalQty" inputmode='none' type="text" [niDecimal]="3" maxlength="5"
+                                        niSelect class="quantity" inputValidator required autocomplete="off"
+                                        id="proQty_{{item.uniqueItemCodeID}}" [(ngModel)]="item.selectedItem.qty"
+                                        placeholder="" />
+                                    <button type="button" (click)="modelSvc.onClickPlus(item.selectedItem, false)"
+                                        class="plus-btn"><i class="pi pi-plus"></i></button>
+                                </div>
+                            </div>
+                            <a type="button" (click)="modelSvc.addToCart(item.selectedItem, productForm, item.uniqueItemCodeID)"
+                                class="btn btn-success"><img src="assets/images/interface/cart.svg"
+                                    alt="cart" /> Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

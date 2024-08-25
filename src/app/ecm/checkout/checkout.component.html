@@ -1,0 +1,118 @@
+<section class="loader-area text-center" *ngIf="isPlaceOrder">
+    <div class="container">
+        <img class="loader-emo" src="assets/images/interface/order-loader.gif" alt="order-loader" />
+        <h2>Please Wait a while your order is placing <img class="typing" src="assets/images/interface/typing.gif" alt="order-loader" /></h2>
+    </div>
+</section>
+
+<section class="checkout-area" *ngIf="!isPlaceOrder">
+    <div class="container-xl">
+        <form #storeAddressForm="ngForm" autocomplete="off" [addValidators]="modelSvc.validationMsgObj"
+            validationMessage="orderDeliveryDetailValidateModel">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-7 col-sm-12">
+                    <div class="store-info">
+                        <img src="assets/images/interface/logo-foot.svg" alt="logo" />
+                        <h3><b>Restaurant Name:</b> {{modelSvc.orderDTO.orderDeliveryDetail.storeName}}</h3>
+                        <h4><b>Address:</b> {{modelSvc.orderDTO.orderDeliveryDetail.storeAddress}}</h4>
+                        <h4><b>Contact Number:</b>  {{modelSvc.orderDTO.orderDeliveryDetail.storeContactNo}}</h4>
+                        <h4 class="warn"><b>Restaurant Opening Time:</b>  {{modelSvc.strOpeningTime}} </h4>
+                        <h4 class="warn"><b>Restaurant Closing Time:</b>  {{modelSvc.strClosingTime}}</h4>
+
+                        <div class="store-addresses-list">
+                            <h1>Available Stores</h1>
+                            <div class="each-address" *ngFor="let item of modelSvc.storeAddress" (click)="showStoreAddress(item)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M8.75 10a3.25 3.25 0 1 1 6.5 0a3.25 3.25 0 0 1-6.5 0"/><path fill="currentColor" fill-rule="evenodd" d="M3.774 8.877a8.038 8.038 0 0 1 8.01-7.377h.432a8.038 8.038 0 0 1 8.01 7.377a8.693 8.693 0 0 1-1.933 6.217L13.5 20.956a1.937 1.937 0 0 1-3 0l-4.792-5.862a8.693 8.693 0 0 1-1.934-6.217M12 5.25a4.75 4.75 0 1 0 0 9.5a4.75 4.75 0 0 0 0-9.5" clip-rule="evenodd"/></svg>
+                                {{item.storeName}}
+                            </div>
+                        </div>
+                        <!-- <a type="button" (click)="showStoreAddress()">See All Restaurant Address</a> -->
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-7 col-sm-12">
+                    <div class="payment-area">
+                        <div class="order-time-address">
+                            <div class="order-address d-flex align-items-center justify-content-between">
+                                <h2><b>{{modelSvc.orderTypeCd == modelSvc.orderType.Delivery ? "Delivery" : "Pick-up"}} Address:</b> {{modelSvc.orderTypeCd == modelSvc.orderType.Delivery ? modelSvc.orderDTO.orderDeliveryDetail.deliveryAddress : modelSvc.orderDTO.orderDeliveryDetail.storeName }}</h2>
+                                <a class="btn-dv" *ngIf="modelSvc.orderTypeCd != modelSvc.orderType.Delivery" (click)="showAddressModal()">Change Restaurant</a>
+                            </div>
+                            <div class="order-time text-center">
+                                <div class="row">
+                                    <div class="col">
+                                        <fieldset>
+                                            <h4 class="title">{{modelSvc.orderTypeCd == modelSvc.orderType.Delivery ? "Delivery" : "Pick-up"}} Date*</h4>
+                                            <p-calendar name="preorderDate" id="preOrderDate"
+                                                [(ngModel)]="modelSvc.orderDTO.orderDeliveryDetail.preorderDate"
+                                            
+                                                [showIcon]="true" inputId="icon" inputValidator
+                                                (onSelect)="modelSvc.setStrScheduleTime()" [minDate]="modelSvc.minDate"
+                                                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                                                dateFormat="dd-M-y">
+                                            </p-calendar>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col">
+                                        <fieldset>
+                                            <h4 class="title">{{modelSvc.orderTypeCd == modelSvc.orderType.Delivery ? "Delivery" : "Pick-up"}} Time*</h4>
+                                            <p-calendar name="preorderTime"
+                                                [(ngModel)]="modelSvc.orderDTO.orderDeliveryDetail.preorderTime"
+                                                [minDate]="modelSvc.strMinTime" [maxDate]="modelSvc.strMaxTime"
+                                                inputValidator [timeOnly]="true" dataType="string" inputId="timeonly" hourFormat="12"
+                                                [showIcon]="true">
+                                            </p-calendar>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method mt-3">
+                            <h4 class="d-flex align-items-center mb-2"><img class="me-3"
+                                    src="assets/images/interface/payment.svg" alt="payment" /> Payment Method
+                            </h4>
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <div *ngFor="let entity of modelSvc.paymentProcessList; let entityIndex = index">
+                                        <span class="collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseOne'+ entityIndex">
+                                            <label class="radio-check">
+                                                <input type="radio" [value]="entity.paymentProcessID" (change)="modelSvc.resetPaymentProcessList()"
+                                                name="paymentMethod"  [(ngModel)]="modelSvc.selectedMethodValue" />
+                                                <i class="pi pi-check"></i>
+                                                <h4>{{entity.paymentProcessName}}</h4>
+                                            </label>
+                                        </span>
+
+                                        <div id="collapseOne{{entityIndex}}" class="collapse" data-bs-parent="#accordionExample">
+                                            <div *ngFor="let item of entity.processItemList; let processIndex = index">
+                                                <div class="accordion-body">
+                                                    <h5>{{item.paymentMethodDescription}}</h5>
+                                                    <div *ngFor="let paymentItem of item.paymentProcessItemList; let index = index" ngModelGroup="paymentProcessItem{{entityIndex}}{{processIndex}}{{index}}">
+                                                        <label class="radio-check" for="paymentItem{{entityIndex}}{{processIndex}}{{index}}">
+                                                            <span *ngIf="paymentItem.paymentMethodCd==1">
+                                                                <img src="assets/images/payment/cash.svg" alt="pay"/>
+                                                                
+                                                            </span>
+                                                            <app-ni-file-single-view [uploadOption]="payImageViewOption"
+                                                                    *ngIf="paymentItem.paymentMethodCd!=1" [isFullImage]="true"
+                                                                    [objectId]="paymentItem.paymentGatewayServiceID">
+                                                            </app-ni-file-single-view>
+                                                            <input type="checkbox" name="paymentItem{{entityIndex}}{{processIndex}}{{index}}"
+                                                                id="paymentItem{{entityIndex}}{{processIndex}}{{index}}"
+                                                                [(ngModel)]="paymentItem.isSelected" />
+                                                            <i class="pi pi-check"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-success" type="button" (click)="saveOrder(storeAddressForm)">Confirm Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+

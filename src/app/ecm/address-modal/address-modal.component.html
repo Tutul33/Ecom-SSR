@@ -1,0 +1,47 @@
+<div class="dialog-content">
+    <div class="dialog-body">
+        <form #spicyForm="ngForm">
+            <div class="locations">
+                <div class="location-head d-flex align-items-center">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <img src="assets/images/icons/location.svg" alt="location" />
+                        <h4 class="mb-0">{{modelSvc.orderTypeCd == modelSvc.orderType.Delivery ? "Choose Your Delivery Address" : "Select nearby store in your location"}}</h4>
+                    </div>
+                </div>
+                <div class="locations-box">
+                    <div class="mt-4 mb-2" *ngIf="modelSvc.orderTypeCd == modelSvc.orderType.Delivery">
+                        <a type="button" (click)="showAddressPickerModal()">+ Add New Delivery Address</a>
+                    </div>
+                    <div *ngIf="modelSvc.orderTypeCd == modelSvc.orderType.Delivery">
+                        <div class="d-flex justify-content-between align-items-center" *ngFor="let item of customerModelSvc.customerAddressList; let i =index">
+                        <label class="radio-check">
+                            <input type="radio" (change)="onClickAddress(item)" [checked]="item.isSelected" name="customerAddress" [value]="item.id" />
+                            <i class="pi pi-check"></i>
+                            <h4>{{item.address}}</h4>
+                        </label>
+                        <!-- <a (click)="deleteAddress(item)"><img src="../../../assets/images/icons/trash.svg"
+                                alt="location" /></a> -->
+                    </div>
+                    <h4 class="note" *ngIf="customerModelSvc.customerAddressList.length == 0">Please add at least one delivery address</h4>
+                    </div>
+
+
+                    <div *ngIf="modelSvc.orderTypeCd != modelSvc.orderType.Delivery">
+                        <div class="d-flex justify-content-between align-items-center"
+                            *ngFor="let item of modelSvc.storeAddress; let i =index">
+                            <label class="radio-check">
+                                <input type="radio" (change)="onClickAddress(item)" [checked]="item.isSelected" [value]="item.storeID" name="images" />
+                                <i class="pi pi-check"></i>
+                                <h4><b>{{item.storeName}}</b><br>{{item.shortAddress}}</h4>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mb-4">
+                    <button type="button" (click)="onClickAddressOk()" [disabled]="selectedAddress == null" class="btn btn-success">Ok</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

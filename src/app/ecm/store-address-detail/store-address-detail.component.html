@@ -1,0 +1,26 @@
+<div class="dialog-content">
+    <div class="dialog-body">
+        <div class="store-addresses p-0">
+            <div class="row align-items-center">
+                <div class="col-sm-12">
+                    <div class="store-box mb-0">
+                        <h1>{{store.storeName}}</h1>
+                        <div class="detail-box">
+                            <h3><b>Address:</b> {{store.shortAddress}}</h3>
+                            <h4><b>Contact Number:</b> {{store.mobile}}</h4>
+                            <h4><b>Email:</b> {{store.email}}</h4>
+                        </div>
+                        <div class="info-box">
+                            <h5>
+                                Opening Time: {{store.openingTime}}<br>
+                                Closing Time: {{store.closingTime}}
+                            </h5>
+                            <a *ngIf="store.mapAddress" (click)="navigateToMap(store)">
+                                <img src="assets/images/icons/location-white.svg" alt="location"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

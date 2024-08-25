@@ -1,0 +1,104 @@
+<!-- <section class="address-picker success text-center">
+    <div class="container">
+        <div class="address-box text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img src="assets/images/interface/thank.gif" alt="thanks"/>
+            </div>
+            <h3>THANK YOU</h3>
+            <div class="d-flex align-items-center justify-content-center">
+                <img class="thankyou" src="assets/images/interface/thank-you.png" alt="thanks"/>
+            </div>
+            <h4>Your Order Place Successfully</h4>
+            <h5>Your Order Number is : {{modelSvc.tempOrderDTO.uniqueOrderNo}}</h5>
+            <a (click)="onClickOrderDetail(modelSvc.tempOrderDTO.id)" class="btn btn-detail">See order details</a>
+            <p>
+                Delivery Date & Time: {{modelSvc.tempOrderDTO.orderDeliveryDetail.displayPreOrderDate}} {{modelSvc.tempOrderDTO.orderDeliveryDetail.preorderTime}}<br>
+                Total Amount: {{modelSvc.tempOrderDTO.roundAmount}} {{modelSvc.currency}} ({{modelSvc.tempOrderDTO.paymentStatus}})
+            </p>
+            <p>
+                <b>Your Prefered Store:</b><br>
+                {{modelSvc.tempOrderDTO.orderDeliveryDetail.storeAddress}}
+            </p>
+            <p>Contact Number : {{modelSvc.tempOrderDTO.orderDeliveryDetail.storeContactNo}}</p>
+            <a (click)="onClickTrackOrder(modelSvc.tempOrderDTO.id)" class="btn btn-track">Track Your Order</a>
+            <div class="d-flex justify-content-between">
+                <div class="justify-content-start">
+                    <a type="button" (click)="onClickCopyTrackingLink(modelSvc.tempOrderDTO.orderTrackLink)" class="btn btn-copy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32"><path fill="#02BF4E" d="M11.75 2A3.25 3.25 0 0 0 8.5 5.25v18a3.25 3.25 0 0 0 3.25 3.25h12A3.25 3.25 0 0 0 27 23.25v-18A3.25 3.25 0 0 0 23.75 2zM10.5 5.25c0-.69.56-1.25 1.25-1.25h12c.69 0 1.25.56 1.25 1.25v18c0 .69-.56 1.25-1.25 1.25h-12c-.69 0-1.25-.56-1.25-1.25zM7 5.749c-1.174.49-2 1.649-2 3V23.5a6.5 6.5 0 0 0 6.5 6.5h8.75a3.251 3.251 0 0 0 3.001-2H11.5A4.5 4.5 0 0 1 7 23.5z"/></svg>
+                        Copy Tracking Link
+                    </a>
+                </div>
+                <div class="justify-content-end">
+                    <a routerLink="/orders" class="btn btn-orders">See all orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+
+<section class="address-picker success">
+    <div class="container">
+        <div class="address-box d-flex flex-column justify-content-center align-items-center">
+            <img src="assets/images/interface/thank-you.gif" alt="thanks"/>
+            <img class="thankyou" src="assets/images/interface/thank-you.png" alt="thanks"/>
+            <h4>Your Order Place Successfully</h4>
+            <div class="address-info-area">
+                <h5>Your Order Number is : {{modelSvc.tempOrderDTO.uniqueOrderNo}}</h5>
+                <div class="address-information">
+                    <div class="row">
+                        <!-- <div class="col-lg-4 col-sm-12">
+                            <div class="ind-box">
+                                <h2>Contact Number:</h2>
+                                <p>{{modelSvc.tempOrderDTO.orderDeliveryDetail.storeContactNo}}</p>
+                            </div>
+                        </div> -->
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="ind-box">
+                                <h2>Delivery Date & Time:</h2>
+                                <p>{{modelSvc.tempOrderDTO.orderDeliveryDetail.displayPreOrderDate}} {{modelSvc.tempOrderDTO.orderDeliveryDetail.preorderTime}}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="ind-box">
+                                <h2>Total Amount:</h2>
+                                <p>{{modelSvc.tempOrderDTO.roundAmount}} {{modelSvc.currency}} ({{modelSvc.tempOrderDTO.paymentStatus}})</p>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-12 col-sm-12">
+                            <div class="ind-box">
+                                <h2>Your Prefered Store:</h2>
+                                <p>{{modelSvc.tempOrderDTO.orderDeliveryDetail.storeAddress}}</p>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-4 col-sm-12">
+                            <a (click)="onClickTrackOrder(modelSvc.tempOrderDTO.id)" class="btn btn-track">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="white"><path d="M12 15a3 3 0 1 0 0-6a3 3 0 0 0 0 6"/><path fill-rule="evenodd" d="M12 3a1 1 0 0 1 1 1v1.07A7.004 7.004 0 0 1 18.93 11H20a1 1 0 1 1 0 2h-1.07A7.004 7.004 0 0 1 13 18.93V20a1 1 0 1 1-2 0v-1.07A7.004 7.004 0 0 1 5.07 13H4a1 1 0 1 1 0-2h1.07A7.005 7.005 0 0 1 11 5.07V4a1 1 0 0 1 1-1m-5 9a5 5 0 1 1 10 0a5 5 0 0 1-10 0" clip-rule="evenodd"/></g></svg>
+                                <span>Track Your Order</span>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <a (click)="onClickOrderDetail(modelSvc.tempOrderDTO.id)" class="btn btn-track">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="white" stroke-width="1.5"><path d="M16 4.002c2.175.012 3.353.109 4.121.877C21 5.758 21 7.172 21 10v6c0 2.829 0 4.243-.879 5.122C19.243 22 17.828 22 15 22H9c-2.828 0-4.243 0-5.121-.878C3 20.242 3 18.829 3 16v-6c0-2.828 0-4.242.879-5.121c.768-.768 1.946-.865 4.121-.877"/><path stroke-linecap="round" d="M10.5 14H17M7 14h.5M7 10.5h.5m-.5 7h.5m3-7H17m-6.5 7H17"/><path d="M8 3.5A1.5 1.5 0 0 1 9.5 2h5A1.5 1.5 0 0 1 16 3.5v1A1.5 1.5 0 0 1 14.5 6h-5A1.5 1.5 0 0 1 8 4.5z"/></g></svg>
+                                <span>See Order Details</span>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <a (click)="onClickCopyTrackingLink(modelSvc.tempOrderDTO.orderTrackLink)" class="btn btn-track">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32"><path fill="#fff" d="M11.75 2A3.25 3.25 0 0 0 8.5 5.25v18a3.25 3.25 0 0 0 3.25 3.25h12A3.25 3.25 0 0 0 27 23.25v-18A3.25 3.25 0 0 0 23.75 2zM10.5 5.25c0-.69.56-1.25 1.25-1.25h12c.69 0 1.25.56 1.25 1.25v18c0 .69-.56 1.25-1.25 1.25h-12c-.69 0-1.25-.56-1.25-1.25zM7 5.749c-1.174.49-2 1.649-2 3V23.5a6.5 6.5 0 0 0 6.5 6.5h8.75a3.251 3.251 0 0 0 3.001-2H11.5A4.5 4.5 0 0 1 7 23.5z"/></svg>
+                                <span>Copy Tracking Link</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="d-flex justify-content-center mt-2 py-2">
+                                <a routerLink="/orders" class="btn btn-orders">See Your All Orders</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> 

@@ -1,0 +1,18 @@
+<form #signUpInForm="ngForm" autocomplete="off" [addValidators]="validationMsgObj" validationMessage="signUpInValidateModel" (keydown)="onMobileFormEnterFunction($event, signUpInForm)">
+    <div class="sign-box">
+      <input type="text" class="form-control" autocomplete="off" inputValidator
+      [(ngModel)]="modelSvc.socialLoginModel.mobileNo" autofocus name="mobileNo"
+      placeholder="Enter Mobile Number*">
+      <p *ngIf="modelSvc.challengeKeyModel.isEnableChallengeKey">Please type the key below if you are not
+        a robot:</p>
+      <label *ngIf="modelSvc.challengeKeyModel.isEnableChallengeKey" class="chal-lab">
+        <span>{{modelSvc.challengeKeyModel.generatedChallangeKey}}</span>
+        <i (click)="modelSvc.setChallengeKey()" class="fa fa-undo"></i>
+      </label>
+      <input *ngIf="modelSvc.challengeKeyModel.isEnableChallengeKey" class="form-control" type="text"
+        autocomplete="off" (paste)="onPastePreventDefault($event)"
+        [(ngModel)]="modelSvc.socialLoginModel.challengeKey" inputValidator name="challengeKey"
+        placeholder="Enter Challenge Key*">
+    </div>
+    <button type="button" (click)="onSubmitMobileNo(signUpInForm)" [disabled]="!signUpInForm.dirty || modelSvc.isSubmitted" class="btn btn-success">Submit</button>
+  </form>

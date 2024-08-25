@@ -1,0 +1,57 @@
+<div class="sign-canvas">
+    <div class="offset-lg-5 col-lg-4 offset-md-3 col-md-6 col-sm-12">
+        <div class="sign-area text-center">
+            <img src="assets/images/interface/logo-foot.svg" alt="logo"/>
+            <h5>SIGN UP/SIGN IN</h5>
+            <div class="sign-tab-area">
+                <div class="sign-tab-middle">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" type="button">OTP</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" type="button">Password</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <form #oTPForm="ngForm" autocomplete="off" [addValidators]="validationMsgObj" validationMessage="oTPValidateModel" (keydown)="onEnterFunction($event, oTPForm)">
+                        <div class="sign-box otp">
+                            <p class="sign-head mb-5">Please Enter your OTP which is already send in your mobile</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div *ngFor="let item of modelSvc.oTPModel.otpLengthArray; let i = index">
+                                    <div ngModelGroup="inputForm_{{i}}" [addValidators]="validationMsgObj">
+                                        <input (keyup)="focusNext(item.otpValue, (i + 1))" (paste)="onPaste($event)" inputValidator
+                                            [(ngModel)]="item.otpValue" class="form-control" niSelect type="text"
+                                            name="oTP" placeholder="-" id="otp_{{i}}" maxlength="1" />
+                                    </div>
+                                </div>
+                            </div>
+                            <p *ngIf="modelSvc.oTPModel.isTimeCount" class="sign-head">Resend code available in {{modelSvc.oTPModel.countingTime}} Sec.</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="justify-content-start">
+                                <a type="button" class="text-btn" (click)="onClickChangeMobileNo()" aria-controls="offcanvasLeft">Change Mobile Number</a>
+                            </div>
+                            <div class="justify-content-end">
+                                <button type="button" class="text-btn" [disabled]="modelSvc.oTPModel.isTimeCount" (click)="resendOTP()"><i class="pi pi-refresh"></i> Resend OTP</button>
+                            </div>
+                        </div>
+                        <label class="radio-check checkbox agree-check">
+                            <input type="checkbox" [(ngModel)]="modelSvc.oTPModel.isTCChecked" inputValidator
+                                name="isTCChecked" required/>
+                            <i class="pi pi-check"></i>
+                            <h4>I have read and agreed to the <a type="button">Terms & Conditions</a> and <a
+                                    type="button">Privacy
+                                    Policy</a>.</h4>
+                        </label>
+                        <button type="button" class="btn btn-success" (click)="onSubmit(oTPForm)"
+                            [disabled]="!oTPForm.dirty || modelSvc.isSubmitted"
+                            data-bs-dismiss="offcanvas">Verify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<img class="sign-img" src="assets/images/interface/sign.png" alt="sign"/>

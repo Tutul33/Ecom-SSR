@@ -1,0 +1,124 @@
+<section class="profile-area">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-5 col-sm-12">
+                <form #customerProfileForm="ngForm" [addValidators]="validationMsgObj"
+                    validationMessage="customerProfileValidateModel">
+                    <div class="profile-pan">
+                        <h1>My Profile <a type="button" *ngIf="editMode == false" (click)="editMode = true">Edit<img
+                                    src="assets/images/icons/edit.svg" alt="edit" /></a></h1>
+                        <div class="profile-image">
+                            <div class="image-pan">
+                                <app-ni-file-single-view [isFullImage]="true" [customStyle]="customImageStyle"
+                                    [uploadOption]="modelSvc.singleFileUploadOption"
+                                    [targetObject]="modelSvc.customerInfo.imageFile"
+                                    [objectId]="modelSvc.customerInfo.imageFile.id">
+                                </app-ni-file-single-view>
+                                <label targetObject="modelSvc.customerInfo.imageFile" *ngIf="editMode">
+                                    <app-ni-file-single-upload (change)="onImageChange()" (removeEvent)="onRemoveImage()" id="photo-upload"
+                                        [uploadOption]="modelSvc.singleFileUploadOption" [targetObject]="modelSvc.customerInfo.imageFile">
+                                    </app-ni-file-single-upload>
+                                    <img class="photopicker" src="assets/images/interface/photo.svg" alt="photopicker">
+                                </label>
+                            </div>
+                            <div class="mem-info">
+                                <!-- <p class="name">{{ modelSvc.customerInfo.name }}</p> -->
+                                <a class="point" (click)="showPointHistoryModal(modelSvc.customerInfo.id)">{{ modelSvc.customerInfo.availablePoint }} Points Available</a>
+                                <p class="type">{{ modelSvc.customerInfo.memberType }} Member</p>
+                                <p class="period">Validity: {{ modelSvc.customerInfo.validityPeriod }}</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-text" [ngClass]="{'edit-pro': editMode}">
+                            <table>
+                                <tr>
+                                    <td>{{fieldTitle['name']}} :</td>
+                                    <td *ngIf="editMode">
+                                        <input type="text" name="name" [(ngModel)]="modelSvc.customerInfo.name">
+                                    </td>
+                                    <td *ngIf="!editMode">{{modelSvc.customerInfo.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{fieldTitle['email']}} :</td>
+                                    <td *ngIf="editMode">
+                                        <input type="text" name="email" class="form-control"
+                                            [(ngModel)]="modelSvc.customerInfo.email">
+                                    </td>
+                                    <td *ngIf="!editMode">{{modelSvc.customerInfo.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{fieldTitle['mobilenumber']}} :</td>
+                                    <td *ngIf="editMode">
+                                        <input readonly type="text" name="mobileNo" class="form-control" inputValidator
+                                            [(ngModel)]="modelSvc.customerInfo.mobileNo">
+
+                                    </td>
+                                    <td *ngIf="!editMode">{{modelSvc.customerInfo.mobileNo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{fieldTitle['dob']}} :</td>
+                                    <td *ngIf="editMode">
+                                        <p-calendar class="datepicker" name="dOB" id="dOB" inputId="icon"
+                                            dateFormat="dd-M-y" [maxDate]="maxDate" [monthNavigator]="true"
+                                            [yearNavigator]="true" [yearRange]="yearRange"
+                                            [(ngModel)]="modelSvc.customerInfo.dOB" [showIcon]="true"
+                                            [style]="{ width: '100%' }">
+                                        </p-calendar>
+                                    </td>
+                                    <td *ngIf="!editMode">{{modelSvc.customerInfo.displayDOB}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td>{{fieldTitle['gender']}} :</td>
+                                    <td *ngIf="editMode">
+                                        <div class="d-flex justify-content-start">
+                                            <label class="radio-check">
+                                                <input type="radio" value="MAL"
+                                                    [(ngModel)]="modelSvc.customerInfo.genderCd" name="genderCd">
+                                                <i class="pi pi-check"></i>
+                                                <h4>Male</h4>
+                                            </label>
+                                            <label class="radio-check">
+                                                <input type="radio" value="FEM"
+                                                    [(ngModel)]="modelSvc.customerInfo.genderCd" name="genderCd">
+                                                <i class="pi pi-check"></i>
+                                                <h4>Female</h4>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="!editMode">{{modelSvc.customerInfo.gender}}</td>
+                                </tr>
+                                <tr *ngIf="editMode">
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-success" type="button"
+                                            (click)="onSubmit(customerProfileForm)"
+                                            [disabled]="!customerProfileForm.dirty">Save Details</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-7 col-sm-12">
+                <div class="profile-pan">
+                    <h1>Address <a type="button" (click)="showAddressPickerModal()">+ Add New location</a></h1>
+                    <div class="p-4">
+                        <div class="add-liner" *ngFor="let item of modelSvc.customerAddressList; let i =index">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="justify-content-start">
+                                    <h3>{{item.address}}</h3>
+                                </div>
+                                <div class="justify-content-end">
+                                    <a type="button" (click)="deleteAddress(item)"><img
+                                            src="assets/images/icons/trash.svg" alt="delete"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

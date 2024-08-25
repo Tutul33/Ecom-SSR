@@ -1,0 +1,16 @@
+
+<div class="dialog-content">
+    <h5 class="dialog-title" id="exampleModalLabel">Please let us know<br>How would you like to take the order?</h5>
+    <form #orderTypeForm="ngForm">
+        <div class="dialog-body">
+            <label class="radio-check type-radio" for="orderTypeCode{{entityIndex}}" *ngFor="let entity of orderTypeList; let entityIndex = index">
+                <input type="radio" id="orderTypeCode{{entityIndex}}" [checked]="selectedOrderType == entity.orderTypeCd" (click)="onClickOrderType(entity.orderTypeCd)" name="orderType" [(ngModel)]="selectedOrderType" value="{{entity.orderTypeCd}}"/>
+                <i class="pi pi-check"></i>
+                <h4>{{entity.orderType}}</h4>
+            </label>
+            <!-- <div class="text-center">
+                <button type="button" [disabled]="selectedOrderType == null" class="btn btn-success mb-3" (click)="confirm()">Confirm</button>
+            </div> -->
+        </div>
+    </form>
+</div>

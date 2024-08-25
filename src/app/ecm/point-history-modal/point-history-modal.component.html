@@ -1,0 +1,23 @@
+
+<div class="mt-3 mb-2 point-history">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Point Added</th>
+                <th>Point Used</th>
+                <th>Current Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let entity of customerModelSvc.memberPointHistoryList">
+                <td>{{ entity.date }}</td>
+                <td>{{ entity.pointAdded }}</td>
+                <td>{{ entity.pointUsed }}</td>
+                <td>{{ entity.currentPoints }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

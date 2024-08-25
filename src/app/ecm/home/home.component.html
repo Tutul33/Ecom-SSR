@@ -1,0 +1,183 @@
+<!----------Addons & Sides---------->
+<section class="banner-area" *ngIf="modelSvc.pageConfig.isTopBannerEnable">
+    <app-banner [visibilityTypeCd]="modelSvc.pageConfig.tBVisibilityType" [bannerList]="modelSvc.topBannerList"></app-banner>
+</section>
+
+<section class="category-area"
+    *ngIf="modelSvc.pageConfig.isCategoriesEnable">
+    <div class="container-xl">
+        <h1 class="header-title">{{fieldTitle['categories']}}</h1>
+        <div class="items-area">
+            <p-carousel *ngIf="modelSvc.pageConfig.catVisibilityType == modelSvc.visibilityType.Slide" [value]="modelSvc.itemCategories"
+                styleClass="custom-carousel" [numVisible]="8" [numScroll]="1" [autoplayInterval]="0" [circular]="true"
+                [showIndicators]="false" [responsiveOptions]="responsiveOptionsCategory" id="categoryID"
+                widgetVar="carouselNice">
+                <ng-template let-category pTemplate="item">
+                    <a class="item-head cate" type="button" (click)="navigateFoodMenu(category)">
+                        <span *ngIf="modelSvc.pageConfig.catShowAs == modelSvc.showAs.ImageAndName || modelSvc.pageConfig.catShowAs == modelSvc.showAs.OnlyImage">
+                            <img src="{{category.imageFilePath}}" alt="category Image"/>
+                        </span>
+                        <h4 *ngIf="modelSvc.pageConfig.catShowAs == modelSvc.showAs.ImageAndName || modelSvc.pageConfig.catShowAs == modelSvc.showAs.OnlyName">
+                            {{category.category}}</h4>
+                    </a>
+                </ng-template>
+            </p-carousel>
+
+            <div class="row" *ngIf="modelSvc.pageConfig.catVisibilityType == modelSvc.visibilityType.Grid">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-3" *ngFor="let category of modelSvc.itemCategories">
+                    <a class="item-head my-2" type="button" (click)="navigateFoodMenu(category)">
+                        <span *ngIf="modelSvc.pageConfig.catShowAs == modelSvc.showAs.ImageAndName || modelSvc.pageConfig.catShowAs == modelSvc.showAs.OnlyImage">
+                            <img src="{{category.imageFilePath}}" alt="category Image"/>
+                        </span>
+                        <h4 *ngIf="modelSvc.pageConfig.catShowAs == modelSvc.showAs.ImageAndName || modelSvc.pageConfig.catShowAs == modelSvc.showAs.OnlyName">
+                            {{category.category}}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="category-area scroller-nav" id="scroller-nav">
+    <div class="container-xl">
+        <div class="items-area">
+            <p-carousel [value]="modelSvc.itemCategories"
+                styleClass="custom-carousel" [numVisible]="8" [numScroll]="1" [autoplayInterval]="0" [circular]="true"
+                [showIndicators]="false" [responsiveOptions]="responsiveOptionsCategory" id="categoryID"
+                widgetVar="carouselNice">
+                <ng-template let-category pTemplate="item" >
+                    <a class="item-head" type="button" (click)="navigateFoodMenu(category)">
+                        <h4 *ngIf="modelSvc.pageConfig.catShowAs == modelSvc.showAs.ImageAndName || modelSvc.pageConfig.catShowAs == modelSvc.showAs.OnlyName">
+                        {{category.category}}</h4>
+                    </a>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+</div>
+
+<section class="banner-area" *ngIf="modelSvc.pageConfig.isMB01Enable">
+    <app-banner [visibilityTypeCd]="modelSvc.pageConfig.mB01VisibilityType" [bannerList]="modelSvc.middleBanner01List"></app-banner>
+</section>
+
+<section class="running-area" *ngIf="modelSvc.pageConfig.isTSDEnable">
+    <div class="container-xl">
+        <h1 class="header-title">Todays Special Deals</h1>
+        <p-carousel [value]="modelSvc.mealList" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1"
+            [circular]="true" [showIndicators]="false" [responsiveOptions]="responsiveOptionsSpecial">
+            <ng-template let-item pTemplate="item">
+                <a type="button" (click)="navigateSpecialItem('Todays Special Deals', modelSvc.mealList)"
+                    class="product-item">
+                    <div class="product-item-content special">
+                        <img src="{{item.imageFilePath}}" alt="Image"/>
+                        <span class="pcd">CD : {{item.itemCode}}</span>
+                        <span class="p-price">                            
+                            <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.unitPrice}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;
+                            <span *ngIf="item.offerUnitPrice">{{item.offerUnitPrice}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                        </span>
+                        <div class="offer-img" *ngIf="item.offerImageFilePath">
+                            <img src="{{item.offerImageFilePath}}" alt="offer"/>
+                        </div>
+                        <h3 class="pinfo">
+                            <span>{{item.variationsName}}</span>
+                        </h3>
+                    </div>
+                </a>
+            </ng-template>
+        </p-carousel>
+    </div>
+</section>
+
+<section class="banner-area" *ngIf="modelSvc.pageConfig.isMB02Enable">
+    <app-banner [visibilityTypeCd]="modelSvc.pageConfig.mB02VisibilityType" [bannerList]="modelSvc.middleBanner02List"></app-banner>
+</section>
+
+<section class="running-area addon" *ngIf="modelSvc.pageConfig.isAOSEnable">
+    <div class="container-xl">
+        <h1 class="header-title text-center">Add-on & Sides</h1>
+        <p-carousel [value]="modelSvc.addOnItems" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1"
+            [circular]="true" [showIndicators]="false" [responsiveOptions]="responsiveOptionsSpecial">
+            <ng-template let-item pTemplate="item">
+                <a type="button" class="product-item" (click)="navigateSpecialItem('Add-on & Sides', modelSvc.addOnItems)">
+                    <div class="product-item-content addon-sell">
+                        <img src="{{item.selectedItem.imageFilePath}}" alt="Image"/>
+                        <span class="pcd">CD : {{item.itemCode}}</span>
+                        <span class="p-price">
+                            <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.unitPrice}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;
+                            <span *ngIf="item.offerUnitPrice">{{item.offerUnitPrice}}{{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                            <span *ngIf="item.isSecondaryUnit"><br>
+                                <span [ngClass]="item.secondaryOfferUnitPrice > 0 ? 'offer-minus' : ''">{{item.secondaryUnitPrice}} {{modelSvc.currency}}/{{item.secondaryUnit}}</span>&nbsp;
+                                <span *ngIf="item.secondaryOfferUnitPrice">{{item.secondaryOfferUnitPrice}} {{modelSvc.currency}}/{{item.secondaryUnit}}</span>
+                            </span>
+                        </span>
+                        <div class="offer-img" *ngIf="item.offerImageFilePath">
+                            <img src="{{item.offerImageFilePath}}"/>
+                        </div>
+                        <h3 class="pinfo">
+                            <span>{{item.variationsName}}</span>
+                        </h3>
+                    </div>
+                </a>
+            </ng-template>
+        </p-carousel>
+    </div>
+</section>
+
+<section class="banner-area" *ngIf="modelSvc.pageConfig.isMB03Enable">
+    <app-banner [visibilityTypeCd]="modelSvc.pageConfig.mB03VisibilityType" [bannerList]="modelSvc.middleBanner03List"></app-banner>
+</section>
+
+<section class="running-area best" *ngIf="modelSvc.pageConfig.isBSIEnable">
+    <div class="container-xl">
+        <h1 class="header-title">Best Selling</h1>
+        <form name="bestSelling">
+        <p-carousel [value]="modelSvc.bestSellingItems" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1"
+            [circular]="true" [showIndicators]="false" [responsiveOptions]="responsiveOptionsBest">
+            <ng-template let-item pTemplate="item">
+                <div class="product-item"
+                    (click)="navigateSpecialItem('Best Selling', modelSvc.bestSellingItems)">
+                    <a type="button" class="product-item-content best-sell">
+                        <img src="{{item.imageFilePath}}" alt="category Image"/>
+                        <span class="pcd">CD : {{item.itemCode}}</span>
+                        <span class="p-price">
+                            <span [ngClass]="item.offerUnitPrice > 0 ? 'offer-minus' : ''">{{item.unitPrice}} {{modelSvc.currency}}/{{item.sUOMSN}}</span>&nbsp;  
+                            <span *ngIf="item.offerUnitPrice">{{item.offerUnitPrice}}{{modelSvc.currency}}/{{item.sUOMSN}}</span>
+                            <span *ngIf="item.isSecondaryUnit"><br>
+                                <span [ngClass]="item.secondaryOfferUnitPrice > 0 ? 'offer-minus' : ''">{{item.secondaryUnitPrice}} {{modelSvc.currency}}/{{item.secondaryUnit}}</span>&nbsp;
+                                <span *ngIf="item.secondaryOfferUnitPrice">{{item.secondaryOfferUnitPrice}} {{modelSvc.currency}}/{{item.secondaryUnit}}</span>
+                            </span>
+                        </span>
+                        <div class="offer-img" *ngIf="item.offerImageFilePath">
+                            <img src="{{item.offerImageFilePath}}" alt="offer"/>
+                        </div>
+                        <h3 class="pinfo">
+                            <span>{{item.variationsName}}</span>
+                        </h3>
+                    </a>
+                </div>
+            </ng-template>
+        </p-carousel>
+     </form>
+    </div>
+</section>
+
+<section class="banner-area" *ngIf="modelSvc.pageConfig.isMB04Enable">
+    <app-banner [visibilityTypeCd]="modelSvc.pageConfig.mB04VisibilityType" [bannerList]="modelSvc.middleBanner04List"></app-banner>
+</section>
+
+<section class="available-area" *ngIf="modelSvc.pageConfig.isAIEnable">
+    <div class="container-xl">
+        <app-item></app-item>
+    </div>
+</section>
+
+<section class="banner-area" *ngIf="modelSvc.pageConfig.isBBEnable">
+    <app-banner [visibilityTypeCd]="modelSvc.pageConfig.bBVisibilityType" [bannerList]="modelSvc.bottomBannerList"></app-banner>
+</section>
+
+<div class="addons-btn">
+    <button class="btn-addons" (click)="modelSvc.showAddOnModal()">
+        <h4>Add-on & Sides</h4>
+        <i class="pi pi-chevron-left"></i>
+    </button>
+</div>
