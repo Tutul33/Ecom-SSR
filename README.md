@@ -17,17 +17,18 @@ Add Angular Universal:
 
 
 # Publish To IIS of Windows Server 2019
-|___dist
+|__ dist
 
-|      |__ browser
-              |              
-|             |___index.html
+|-------|__browser
+                           
+|-------------|___index.html
 
-|      |__ server
-              |              
-|             |___main.js
+|--------|__ server
+                            
+|-------------|___main.js
 
-|___ nodeJs
+|__ nodeJs
+
        |___ node-v16.14.0
 
 |___web.config
