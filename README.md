@@ -16,19 +16,19 @@ Add Angular Universal:
 #This will render your pages on the server, making them more SEO-friendly.
 
 
-# Publish To IIS of Windows Server 2029
+# Publish To IIS of Windows Server 2019
 |___dist
 
-|______|___browser
-              |
+|      |__ browser
+              |              
 |             |___index.html
 
-|______|___server
-              |
+|      |__ server
+              |              
 |             |___main.js
 
 |___ nodeJs
-       |____ node-v16.14.0
+       |___ node-v16.14.0
 
 |___web.config
 
